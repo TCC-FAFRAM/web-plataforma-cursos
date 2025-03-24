@@ -1,0 +1,26 @@
+<div class="overflow-x-auto w-full">
+    <table class="table w-full">
+      <thead>
+        <tr>
+          <th *ngIf="selectable"></th>
+          <th *ngFor="let col of columns">{{ col.label }}</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let row of data">
+          <td *ngIf="selectable">
+            <input type="checkbox" [checked]="isSelected(row)" (change)="toggleRow(row)" />
+          </td>
+          <td *ngFor="let col of columns">
+            {{ row[col.field] }}
+          </td>
+          <td class="flex gap-2">
+            <button (click)="edit.emit(row)">✏️</button>
+            <button (click)="delete.emit(row)">🗑️</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  

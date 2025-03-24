@@ -1,0 +1,74 @@
+<div class="flex min-h-screen">
+  <!-- Left - Login -->
+  <div class="w-full md:w-1/2 flex flex-col justify-center px-8 bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100">
+    <div class="max-w-md w-full mx-auto">
+      <h2 class="text-3xl font-bold mb-2 text-primary">Entrar</h2>
+      <p class="text-sm text-gray-500 dark:text-gray-400 mb-6">Entre com sua conta.</p>
+
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <div class="mb-4">
+          <label class="text-sm font-medium">Email*</label>
+          <input
+            type="email"
+            formControlName="email"
+            class="w-full mt-1 px-4 py-2 border border-gray-300 dark:border-gray-700 dark:bg-gray-800 rounded-lg focus:ring-2 focus:ring-blue-500"
+            placeholder="mail@website.com"
+          />
+          <div *ngIf="email?.touched && email?.invalid" class="text-sm text-red-500 mt-1">
+            <span *ngIf="email?.errors?.['required']">O email é obrigatório.</span>
+            <span *ngIf="email?.errors?.['email']">Formato de email inválido.</span>
+          </div>
+        </div>
+
+        <div class="mb-4">
+          <label class="text-sm font-medium">Senha*</label>
+          <input
+            type="password"
+            formControlName="password"
+            class="w-full mt-1 px-4 py-2 border border-gray-300 dark:border-gray-700 dark:bg-gray-800 rounded-lg focus:ring-2 focus:ring-blue-500"
+            placeholder="Min. 6 characters"
+          />
+          <div *ngIf="password?.touched && password?.invalid" class="text-sm text-red-500 mt-1">
+            <span *ngIf="password?.errors?.['required']">A senha é obrigatória.</span>
+            <span *ngIf="password?.errors?.['minlength']">A senha deve ter pelo menos 6 caracteres.</span>
+          </div>
+        </div>
+
+        <div class="flex items-center justify-between mb-4">
+          <label class="text-sm flex items-center space-x-2">
+            <input type="checkbox" />
+            <span>Lembre de mim</span>
+          </label>
+          <a href="#" class="text-sm text-blue-600 hover:underline">Esqueceu a senha?</a>
+        </div>
+
+        <button
+          type="submit"
+          (ngSubmit)="onSubmit()"
+          class="w-full bg-primary text-white py-2 rounded-lg hover:opacity-85 cursor-pointer transition"
+          [disabled]="loginForm.invalid"
+        >
+          Login
+        </button>
+      </form>
+
+      <p class="text-sm text-center text-gray-500 dark:text-gray-400 mt-6">
+        Ainda não está registrado?
+        <a href="#" class="text-indigo-600 font-semibold hover:underline">
+          Criar uma conta</a>
+      </p>
+    </div>
+  </div>
+
+  <!-- Right - Banner -->
+  <div class="hidden md:flex w-1/2 bg-gradient-to-br from-primary to-primary text-white items-center justify-center relative">
+    <div class="p-10 max-w-lg">
+      <img src="../../../../assets/images/Logo.png" alt="" srcset="">
+      <h2 class="text-2xl text-center font-semibold mb-4">Plataforma de Certificação.</h2>
+      <p class="text-sm text-gray-200 mb-8">
+        Qualidade e experiência consistentes em todas as plataformas e dispositivos.
+      </p>
+
+    </div>
+  </div>
+</div>
