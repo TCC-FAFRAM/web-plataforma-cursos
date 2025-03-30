@@ -8,7 +8,7 @@ module.exports = {
     extend: {
       colors: {
         primary: '#2d6d20',
-        secondary: '#f1b542',
+        secondary: '#f1b542', 
         accent: '#22c55e',
         danger: '#ef4444',
         warning: '#facc15',
@@ -26,5 +26,6 @@ module.exports = {
       },
     },
   },
-  plugins: [],
+  plugins: [
+  ],
 }

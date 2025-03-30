@@ -1,1 +1,84 @@
-<p>controle.fazendas works!</p>
+<app-table-layout
+  title="Fazendas"
+  titleButton="Fazenda"
+  [total]="total()"
+  [pageSize]="take()"
+  (pageChange)="onPageChange($event)"
+  (pageSizeChange)="onPageSizeChange($event)"
+>
+  <!-- Tabela -->
+  <app-table
+    [columns]="columns"
+    [data]="items()"
+    [selectable]="true"
+    (edit)="onEdit($event)"
+    (delete)="onDelete($event)"
+    (rowSelected)="onRowSelect($event)"
+  ></app-table>
+
+  <!-- Formulário -->
+  <div formulario>
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" class="flex flex-col gap-4">
+      <label class="text-sm text-gray-600">
+        Nome:
+        <input
+          formControlName="nome"
+          type="text"
+          class="w-full border px-2 py-1 rounded mt-1"
+        />
+      </label>
+
+      <label class="text-sm text-gray-600">
+        Proprietário:
+        <input
+          formControlName="proprietario"
+          type="text"
+          class="w-full border px-2 py-1 rounded mt-1"
+        />
+      </label>
+
+      <label class="text-sm text-gray-600">
+        Descrição:
+        <textarea
+          formControlName="descricao"
+          rows="3"
+          class="w-full border px-2 py-1 rounded mt-1"
+        ></textarea>
+      </label>
+
+      <label class="text-sm text-gray-600">
+        Distrito ID:
+        <input
+          formControlName="distrito_id"
+          type="number"
+          class="w-full border px-2 py-1 rounded mt-1"
+        />
+      </label>
+
+      <label class="text-sm text-gray-600">
+        Município ID:
+        <input
+          formControlName="municipio_id"
+          type="number"
+          class="w-full border px-2 py-1 rounded mt-1"
+        />
+      </label>
+
+      <label class="text-sm text-gray-600">
+        Complemento:
+        <input
+          formControlName="complemento"
+          type="text"
+          class="w-full border px-2 py-1 rounded mt-1"
+        />
+      </label>
+
+      <button
+        type="submit"
+        class="bg-primary text-white px-4 py-2 rounded hover:opacity-90 text-sm"
+      >
+        Salvar
+      </button>
+    </form>
+  </div>
+</app-table-layout>

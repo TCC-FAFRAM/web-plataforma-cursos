@@ -1,0 +1,47 @@
+<div class="relative w-full text-sm">
+    <!-- Botão de exibição -->
+    <button
+      type="button"
+      class="w-full border rounded px-3 py-2 text-left bg-white hover:bg-gray-50 flex items-center justify-between"
+      (click)="toggleDropdown()"
+    >
+      {{ getSelectedLabel() }}
+      <app-icon
+        class="cursor-pointer hover:opacity-75"
+        name="expand_more"
+        variant="material-icons"
+        color="black"
+        [size]="24"
+      />
+    </button>
+  
+    <!-- Lista suspensa -->
+    <ul
+      *ngIf="isOpen"
+      class="absolute z-10 mt-1 w-full bg-white border rounded shadow max-h-60 overflow-auto"
+    >
+      <!-- Campo de pesquisa -->
+      <li class="px-3 py-2">
+        <input
+          type="text"
+          [(ngModel)]="searchTerm"
+          placeholder="Pesquisar..."
+          class="w-full border border-gray-300 rounded px-2 py-1 text-sm"
+        />
+      </li>
+  
+      <!-- Lista filtrada -->
+      <li
+        *ngFor="let item of filteredItems"
+        (click)="selectItem(item)"
+        class="px-3 py-2 hover:bg-gray-100 cursor-pointer"
+      >
+        {{ item[labelKey] }}
+      </li>
+  
+      <li *ngIf="filteredItems.length === 0" class="px-3 py-2 text-gray-400 italic">
+        Nenhum resultado encontrado
+      </li>
+    </ul>
+  </div>
+  

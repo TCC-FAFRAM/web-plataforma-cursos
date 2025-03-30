@@ -2,11 +2,10 @@ import { NestedTreeControl } from '@angular/cdk/tree';
 import { CommonModule } from '@angular/common';
 import { Component, inject, OnInit, ViewChild } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-
-
 import { TokenService } from './services/autenticacao/token.service';
-import { HomeComponent } from "./pages/home/home.component";
-import { LayoutComponent } from "./core/ui/layout/layout.component";
+
+
+
 
 @Component({
   selector: 'app-root',

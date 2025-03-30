@@ -3,11 +3,13 @@ import {
   HttpClient,
   HttpErrorResponse,
   HttpParams,
+  HttpParamsOptions,
 } from '@angular/common/http';
 import { inject, Injectable, signal } from '@angular/core';
 
-import { throwError } from 'rxjs';
 import { environment } from '../../environments/environment';
+import { IQueryBuilder } from '../core/http/pagination/iquery_builder';
+
 
 
 @Injectable({
@@ -17,15 +19,8 @@ export class BaseService {
   protected httpClient = inject(HttpClient);
   protected readonly app: string = environment.appKey;
   protected readonly apiUrl: string = environment.apiUrl;
-  protected setErrorResponse = signal<HttpErrorResponse | null>(null);
 
-  constructor() {
-  
-  }
+  constructor() {}
 
-  protected throwErrorResponse(error: HttpErrorResponse) {
-    this.setErrorResponse.set(error);
-    return throwError(() => error);
-  }
 
 }

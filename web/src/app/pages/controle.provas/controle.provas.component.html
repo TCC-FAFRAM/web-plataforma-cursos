@@ -1,1 +1,58 @@
-<p>controle.provas works!</p>
+<app-table-layout
+  title="Provas"
+  titleButton="Prova"
+  [total]="total()"
+  [pageSize]="take()"
+  (pageChange)="onPageChange($event)"
+  (pageSizeChange)="onPageSizeChange($event)"
+>
+  <!-- Tabela -->
+  <app-table
+    [columns]="columns"
+    [data]="items()"
+    [selectable]="true"
+    (edit)="onEdit($event)"
+    (delete)="onDelete($event)"
+    (rowSelected)="onRowSelect($event)"
+  ></app-table>
+
+  <!-- Formulário -->
+  <div formulario>
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" class="flex flex-col gap-4">
+      <label class="text-sm text-gray-600">
+        ID do Curso:
+        <input
+          formControlName="fk_id_curso"
+          type="number"
+          class="w-full border px-2 py-1 rounded mt-1"
+        />
+      </label>
+
+      <label class="text-sm text-gray-600">
+        Nota Mínima:
+        <input
+          formControlName="nota_minima"
+          type="number"
+          step="0.1"
+          class="w-full border px-2 py-1 rounded mt-1"
+        />
+      </label>
+
+      <label class="text-sm text-gray-600">
+        Total de Perguntas:
+        <input
+          formControlName="total_perguntas"
+          type="number"
+          class="w-full border px-2 py-1 rounded mt-1"
+        />
+      </label>
+
+      <button
+        type="submit"
+        class="bg-primary text-white px-4 py-2 rounded hover:opacity-90 text-sm"
+      >
+        Salvar
+      </button>
+    </form>
+  </div>
+</app-table-layout>

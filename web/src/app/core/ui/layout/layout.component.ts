@@ -4,11 +4,12 @@ import { Router, RouterOutlet } from '@angular/router';
 import { IconComponent } from "../components/icone/icone.component";
 import { LayoutService } from './layout.component.service';
 import { ProfileMenuComponent } from "./components/profile-menu/profile-menu.component";
+import { AlertComponent } from "../components/alert/alert.component";
 
 @Component({
   selector: 'app-layout',
   standalone: true,
-  imports: [CommonModule, RouterOutlet, IconComponent, ProfileMenuComponent],
+  imports: [CommonModule, RouterOutlet, IconComponent, ProfileMenuComponent, AlertComponent],
   templateUrl: './layout.component.html',
   styleUrls: ['./layout.component.css'],
 })
