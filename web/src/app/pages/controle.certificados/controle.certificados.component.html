@@ -10,6 +10,7 @@
   <app-table
     [columns]="columns"
     [data]="items()"
+    [ariaPlaceholder]=""
     [selectable]="true"
     (edit)="onEdit($event)"
     (delete)="onDelete($event)"
@@ -19,28 +20,24 @@
   <!-- Formulário -->
   <div formulario>
     <form [formGroup]="form" (ngSubmit)="onSubmit()" class="flex flex-col gap-4">
-      <label class="text-sm text-gray-600">
-        ID do Usuário:
-        <input 
-          formControlName="fk_id_usuario"
-          type="number" 
-          class="w-full border px-2 py-1 rounded mt-1" />
+      <label class="text-sm text-gray-600"> 
+        Usuário
+        <app-dropdown
+          [items]="dropdownItemsUsuarios"
+          [selectedValue]="selectedUsuario"
+          [placeholder]="selectedUsuarioLabel"
+          (selected)="selectedUsuario = $event">
+        </app-dropdown>
       </label>
 
-      <label class="text-sm text-gray-600">
-        ID do Curso:
-        <input 
-          formControlName="fk_id_curso"
-          type="number" 
-          class="w-full border px-2 py-1 rounded mt-1" />
-      </label>
-
-      <label class="text-sm text-gray-600">
-        Data de Emissão:
-        <input 
-          formControlName="data_emissao"
-          type="date" 
-          class="w-full border px-2 py-1 rounded mt-1" />
+      <label class="text-sm text-gray-600"> 
+        Curso
+        <app-dropdown
+          [items]="dropdownItemsCertificado"
+          [selectedValue]="selectedCetificado"
+          [placeholder]="selectedCertificadoLabel"
+          (selected)="selectedCetificado = $event">
+        </app-dropdown>
       </label>
 
       <label class="text-sm text-gray-600">
@@ -51,19 +48,17 @@
           class="w-full border px-2 py-1 rounded mt-1" />
       </label>
 
-      <label class="text-sm text-gray-600">
+      <label class="text-sm text-gray-600"> 
         Status:
-        <select 
-          formControlName="status"
-          class="w-full border px-2 py-1 rounded mt-1"
-        >
-          <option value="INATIVO">Inativo</option>
-          <option value="SOLICITADO">Solicitado</option>
-          <option value="GERADO">Gerado</option>
-          <option value="APROVADO">Aprovado</option>
-          <option value="RECEBIDO">Recebido</option>
-        </select>
+        <app-dropdown
+          [items]="statusOptions"
+          [selectedValue]="selectedOptions"
+          [placeholder]="selectedOptions"
+          (selected)="selectedOptions = $event">
+        </app-dropdown>
       </label>
+
+
 
       <button type="submit" class="bg-primary text-white px-4 py-2 rounded hover:opacity-90 text-sm">
         Salvar

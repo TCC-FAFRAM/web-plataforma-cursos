@@ -69,6 +69,8 @@ export interface UsuarioModel {
     data_emissao: string;
     url_certificado: string;
     status: 'INATIVO' | 'SOLICITADO' | 'GERADO' | 'APROVADO' | 'RECEBIDO';
+    Usuario: UsuarioModel,
+    Curso: CursoModel
   }
   
   export interface ProvaModel {
@@ -76,6 +78,7 @@ export interface UsuarioModel {
     fk_id_curso: number;
     nota_minima: number;
     total_perguntas: number;
+    Curso: CursoModel;
   }
   
   export interface TentativasProvaModel {

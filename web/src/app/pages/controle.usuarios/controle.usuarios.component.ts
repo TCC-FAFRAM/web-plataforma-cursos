@@ -1,12 +1,16 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { TableComponent } from "../../core/ui/components/table/table.component";
 import { TableLayoutComponent } from "../../core/ui/components/table-layout/table-layout.component";
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { DropdownComponent } from "../../core/ui/components/dropdown/dropdown.component";
-import {  UsuarioModel } from '../../models/usuario/controle.usuario.model';
+import {  FazendaModel, UsuarioModel } from '../../models/usuario/controle.usuario.model';
 import { BaseController } from '../../services/base.crud.controller';
 import { UsuariosService } from '../../services/usuarios/usuario.service';
+import { FuncaoService } from '../../services/funcao/funcao.service';
+import { HttpParams } from '@angular/common/http';
+import { convertDropdownList, DropdownDTO } from '../../dtos/dropdown/dropdown.dto';
+import { DistritoService } from '../../services/ditrito/distrito.service';
 
 @Component({
   selector: 'app-controle.usuarios',
@@ -15,7 +19,10 @@ import { UsuariosService } from '../../services/usuarios/usuario.service';
   templateUrl: './controle.usuarios.component.html',
   styleUrl: './controle.usuarios.component.css'
 })
-export class ControleUsuariosComponent extends BaseController<UsuarioModel> {
+export class ControleUsuariosComponent extends BaseController<UsuarioModel> implements  OnInit {
+serviceFuncao = inject(FuncaoService);
+serviceDistrito = inject(DistritoService);
+
   columns = [
     { field: 'id_usuario', label: 'ID' },
     { field: 'nome', label: 'Nome' },
@@ -41,6 +48,16 @@ export class ControleUsuariosComponent extends BaseController<UsuarioModel> {
     { label: 'Convidado', value: 'guest' }
   ];
 
+  dropdownDistrito: DropdownDTO[] = [
+  ]
+  selectedDistrito = '';
+
+  dropdownMunicipios: DropdownDTO[] = [
+  ]
+  selectedMunicipios = '';
+
+  dropdownItemsFuncao: DropdownDTO[] = []
+
   
   selectedTipo = '';
 
@@ -48,11 +65,44 @@ export class ControleUsuariosComponent extends BaseController<UsuarioModel> {
     protected override fb: FormBuilder,
     usuariosService: UsuariosService
   ) {
-    super(fb, usuariosService);
+    super(fb, usuariosService, 'id_usuario');
     this.form = this.buildForm();
     this.carregar();
   }
+  ngOnInit(): void {
+    this.listFuncao('');
+    this.listUF();
+  }
   
+
+   listFuncao(search?: string) {
+    this.serviceFuncao.getAll({
+      fromObject: {
+        search: search  ?? ''
+      }
+    }).subscribe({
+      next: result => {
+        this.dropdownItemsFuncao = convertDropdownList(result.data, ['nome','id_funcao']);
+      }
+    })
+   }
+
+   listUF(search?: string) {
+    this.serviceDistrito.getUFs().subscribe({
+      next: result => {
+        this.dropdownDistrito = result;
+      }
+    })
+   }
+
+   listMunicipio(uf: any){
+    this.serviceDistrito.getMunicipios(uf).subscribe({
+      next: result => {
+        this.dropdownMunicipios = result;
+      }
+    })
+   }
+
 
   buildForm(): FormGroup {
     return this.fb.group({
@@ -88,4 +138,6 @@ export class ControleUsuariosComponent extends BaseController<UsuarioModel> {
   }
   
 }
+
+
 

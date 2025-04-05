@@ -52,15 +52,6 @@
       </label>
 
       <label class="text-sm text-gray-600">
-        Complemento:
-        <textarea  
-          formControlName="complemento"
-          rows="4"
-          class="w-full border px-2 py-1 rounded mt-1">
-        </textarea>
-      </label>
-
-      <label class="text-sm text-gray-600">
         Email:
         <input 
           formControlName="email"
@@ -71,7 +62,7 @@
       <label class="text-sm text-gray-600"> 
         Função  
         <app-dropdown
-          [items]="dropdownItems"
+          [items]="dropdownItemsFuncao"
           [selectedValue]="selectedTipo"
           [placeholder]="'Selecione o tipo de usuário'"
           (selected)="selectedTipo = $event">
@@ -89,23 +80,44 @@
       </label>
 
       <label class="text-sm text-gray-600"> 
-        Distrito
+        Estado
         <app-dropdown
-          [items]="dropdownItems"
+          [items]="dropdownDistrito"
           [selectedValue]="selectedTipo"
           [placeholder]="'Selecione o Distrito'"
+          (selected)="listMunicipio($event)">
+        </app-dropdown>
+      </label>
+
+
+      <label class="text-sm text-gray-600"> 
+        Município
+        <app-dropdown
+          [items]="dropdownMunicipios"
+          [selectedValue]="selectedTipo"
+          [placeholder]="'Selecione o Município'"
           (selected)="selectedTipo = $event">
         </app-dropdown>
       </label>
 
       <label class="text-sm text-gray-600"> 
-        Município
+        Distrito
         <app-dropdown
-          [items]="dropdownItems"
+          [items]="dropdownDistrito"
           [selectedValue]="selectedTipo"
-          [placeholder]="'Selecione o Município'"
-          (selected)="selectedTipo = $event">
+          [placeholder]="'Selecione o Distrito'"
+          (selected)="selectedTipo">
         </app-dropdown>
+      </label>
+
+
+      <label class="text-sm text-gray-600">
+        Complemento:
+        <textarea  
+          formControlName="complemento"
+          rows="4"
+          class="w-full border px-2 py-1 rounded mt-1">
+        </textarea>
       </label>
 
       <button type="submit" class="bg-primary text-white px-4 py-2 rounded hover:opacity-90 text-sm">

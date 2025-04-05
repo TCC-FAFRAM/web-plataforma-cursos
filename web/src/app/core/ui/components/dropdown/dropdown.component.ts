@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, inject, Input, Output, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { IconComponent } from "../icone/icone.component";
 
@@ -11,6 +11,7 @@ import { IconComponent } from "../icone/icone.component";
   styleUrl: './dropdown.component.css'
 })
 export class DropdownComponent {
+ def =  inject(ChangeDetectorRef);
   @Input() items: any[] = [];
   @Input() labelKey: string = 'label';
   @Input() valueKey: string = 'value';
@@ -19,18 +20,22 @@ export class DropdownComponent {
 
   @Output() selected = new EventEmitter<any>();
 
-  isOpen = false;
+  isOpen = signal(false);
   searchTerm: string = '';
 
   toggleDropdown(): void {
-    this.isOpen = !this.isOpen;
+    this.isOpen.set(!this.isOpen());
     this.searchTerm = ''; // limpa ao abrir
   }
 
   selectItem(item: any): void {
     this.selectedValue = item[this.valueKey];
     this.selected.emit(this.selectedValue);
-    this.isOpen = false;
+    setTimeout(() => {
+      this.isOpen.set(false);
+      this.def.detectChanges(); 
+    }, 0);
+    
   }
 
   getSelectedLabel(): string {

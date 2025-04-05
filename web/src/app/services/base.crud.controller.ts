@@ -20,7 +20,7 @@ interface Error{
 export interface CrudService<T> {
   getAll: (query: HttpParamsOptions) => Observable<PagedResult<T>>;
   create: (data: T) => Observable<T>;
-  update: (data: T) => Observable<T>;
+  update: (data: T, id: number) => Observable<T>;
   delete: (id: number) => Observable<T>;
 }
 
@@ -31,14 +31,19 @@ export abstract class BaseController<T> {
   total = signal(0);
   take = signal(10);
   skip = signal(0);
+  search = signal('');
+  activeEdit = signal(false);
+  id = signal(0)
+
   form!: FormGroup;
 
   protected readonly alertService = inject(AlertService);
 
   constructor(
     protected fb: FormBuilder,
-    protected service: CrudService<T>
-  ) {}
+    protected service: CrudService<T>,
+    protected idField: keyof T
+  ) { }
 
   carregar(): void {
     this.loading.set(true);
@@ -47,6 +52,7 @@ export abstract class BaseController<T> {
       fromObject: {
         take: this.take().toString(),
         skip: this.skip().toString(),
+        search: this.search()
       }
     };
 
@@ -81,7 +87,8 @@ export abstract class BaseController<T> {
   } 
 
   atualizar(item: T): void {
-    this.service.update(item).subscribe({
+    this.id.set(item[this.idField] as unknown as number);
+    this.service.update(item, this.id()).subscribe({
       next: () => {
         this.alertService.show('Registro atualizado com sucesso!', 'success');
         this.carregar();

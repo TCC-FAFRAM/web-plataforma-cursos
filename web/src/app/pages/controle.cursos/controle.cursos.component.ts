@@ -17,11 +17,12 @@ import { CommonModule } from '@angular/common';
   styleUrl: './controle.cursos.component.css'
 })
 export class ControleCursosComponent extends BaseController<CursoModel> {
+  corso: CursoModel | null = null;
   constructor(
     protected override fb: FormBuilder,
     cursoService: CursoService
   ) {
-    super(fb, cursoService);
+    super(fb, cursoService,'id_curso' );
     this.form = this.buildForm();
     this.carregar();
   }
@@ -30,7 +31,7 @@ export class ControleCursosComponent extends BaseController<CursoModel> {
     { field: 'id_curso', label: 'ID' },
     { field: 'titulo', label: 'Título' },
     { field: 'descricao', label: 'Descrição' }
-  ];
+  ]; 
 
   buildForm(): FormGroup {
     return this.fb.group({
@@ -52,6 +53,7 @@ export class ControleCursosComponent extends BaseController<CursoModel> {
   }
 
   onSubmit(): void {
+
     if (this.form.valid) {
       this.salvar(this.form.value);
       this.form.reset();

@@ -19,13 +19,14 @@
   <!-- Formulário -->
   <div formulario>
     <form [formGroup]="form" (ngSubmit)="onSubmit()" class="flex flex-col gap-4">
-      <label class="text-sm text-gray-600">
-        ID do Curso:
-        <input
-          formControlName="fk_id_curso"
-          type="number"
-          class="w-full border px-2 py-1 rounded mt-1"
-        />
+      <label class="text-sm text-gray-600"> 
+        Curso
+        <app-dropdown
+          [items]="dropdownItemsCurso"
+          [selectedValue]="selectedCurso"
+          [placeholder]="selectedCursoLabel"
+          (selected)="selectedCurso = $event">
+        </app-dropdown>
       </label>
 
       <label class="text-sm text-gray-600">

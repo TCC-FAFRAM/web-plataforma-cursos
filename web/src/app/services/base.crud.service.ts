@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 
 export class BaseCrudService<T> extends BaseService {
   private readonly endpoint: string;
-
+  
   constructor(resource: string) {
     super(); // BaseService tem construtor vazio
     this.endpoint = `${this.apiUrl}/${resource}`;
@@ -20,8 +20,8 @@ export class BaseCrudService<T> extends BaseService {
     return this.httpClient.post<T>(this.endpoint, data);
   }
 
-  update(data: T) {
-    return this.httpClient.put<T>(this.endpoint, data);
+  update(data: T, id: number) {
+    return this.httpClient.put<T>(`${this.endpoint}/${id}`, data);
   }
 
   delete(id: number) {

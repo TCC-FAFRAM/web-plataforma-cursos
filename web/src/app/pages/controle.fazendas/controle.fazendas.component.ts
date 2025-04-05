@@ -12,7 +12,7 @@ import { DropdownComponent } from '../../core/ui/components/dropdown/dropdown.co
 @Component({
   selector: 'app-controle.fazendas',
   standalone: true,
-  imports: [CommonModule, TableComponent, TableLayoutComponent, ReactiveFormsModule, DropdownComponent],
+  imports: [CommonModule, TableComponent, TableLayoutComponent, ReactiveFormsModule],
   templateUrl: './controle.fazendas.component.html',
   styleUrl: './controle.fazendas.component.css'
 })
@@ -21,7 +21,7 @@ export class ControleFazendasComponent extends BaseController<FazendaModel> {
     protected override fb: FormBuilder,
     fazendaService: FazendaService
   ) {
-    super(fb, fazendaService);
+    super(fb, fazendaService, 'id_fazenda');
     this.form = this.buildForm();
     this.carregar();
   }
