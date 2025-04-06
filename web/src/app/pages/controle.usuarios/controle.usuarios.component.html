@@ -36,14 +36,6 @@
       </label>
 
       <label class="text-sm text-gray-600">
-        Tipo:
-        <input 
-          formControlName="tipo"
-          type="text" 
-          class="w-full border px-2 py-1 rounded mt-1" />
-      </label>
-
-      <label class="text-sm text-gray-600">
         CPF:
         <input 
           formControlName="cpf"
@@ -63,9 +55,9 @@
         Função  
         <app-dropdown
           [items]="dropdownItemsFuncao"
-          [selectedValue]="selectedTipo"
+          [selectedValue]="selectedFuncao"
           [placeholder]="'Selecione o tipo de usuário'"
-          (selected)="selectedTipo = $event">
+          (selected)="selectedFuncao = $event">
         </app-dropdown>
       </label>
 
@@ -73,19 +65,19 @@
         Fazenda
         <app-dropdown
           [items]="dropdownItems"
-          [selectedValue]="selectedTipo"
+          [selectedValue]="selectedTipoUsuario"
           [placeholder]="'Selecione a Fazenda'"
-          (selected)="selectedTipo = $event">
+          (selected)="selectedTipoUsuario = $event">
         </app-dropdown>
       </label>
 
       <label class="text-sm text-gray-600"> 
         Estado
         <app-dropdown
-          [items]="dropdownDistrito"
-          [selectedValue]="selectedTipo"
-          [placeholder]="'Selecione o Distrito'"
-          (selected)="listMunicipio($event)">
+          [items]="dropdownUF"
+          [selectedValue]="selectedUF"
+          [placeholder]="'Selecione o Estado'"
+          (selected)="listMunicipio($event, false)">
         </app-dropdown>
       </label>
 
@@ -94,9 +86,9 @@
         Município
         <app-dropdown
           [items]="dropdownMunicipios"
-          [selectedValue]="selectedTipo"
+          [selectedValue]="selectedMunicipios"
           [placeholder]="'Selecione o Município'"
-          (selected)="selectedTipo = $event">
+          (selected)="listDistrito($event)">
         </app-dropdown>
       </label>
 
@@ -104,9 +96,9 @@
         Distrito
         <app-dropdown
           [items]="dropdownDistrito"
-          [selectedValue]="selectedTipo"
+          [selectedValue]="selectedDistrito"
           [placeholder]="'Selecione o Distrito'"
-          (selected)="selectedTipo">
+          (selected)="selectedDistrito = $event">
         </app-dropdown>
       </label>
 

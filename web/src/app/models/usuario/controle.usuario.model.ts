@@ -53,6 +53,8 @@ export interface UsuarioModel {
     url_video: string;
     duracao: number;
     fk_id_curso: number;
+
+    Curso: CursoModel;
   }
   
   export interface CursosConcluidosModel {

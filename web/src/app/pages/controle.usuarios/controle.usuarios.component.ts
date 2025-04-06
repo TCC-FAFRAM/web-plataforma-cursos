@@ -22,6 +22,7 @@ import { DistritoService } from '../../services/ditrito/distrito.service';
 export class ControleUsuariosComponent extends BaseController<UsuarioModel> implements  OnInit {
 serviceFuncao = inject(FuncaoService);
 serviceDistrito = inject(DistritoService);
+usuario: UsuarioModel | null = null; 
 
   columns = [
     { field: 'id_usuario', label: 'ID' },
@@ -43,23 +44,23 @@ serviceDistrito = inject(DistritoService);
   
 
   dropdownItems = [
-    { label: 'Administrador', value: 'admin' },
-    { label: 'Usuário', value: 'user' },
-    { label: 'Convidado', value: 'guest' }
+    { label: 'Administrador', value: 'ADMIN' },
+    { label: 'Usuário', value: 'USER' },
   ];
+  selectedTipoUsuario = '';
 
-  dropdownDistrito: DropdownDTO[] = [
-  ]
-  selectedDistrito = '';
+  dropdownUF: DropdownDTO[] = []
+  selectedUF = '';
 
-  dropdownMunicipios: DropdownDTO[] = [
-  ]
-  selectedMunicipios = '';
+  dropdownMunicipios: DropdownDTO[] = []
+  selectedMunicipios = 0;
+
+  dropdownDistrito: DropdownDTO[] = []
+  selectedDistrito = 0;
+
 
   dropdownItemsFuncao: DropdownDTO[] = []
-
-  
-  selectedTipo = '';
+  selectedFuncao = 0;
 
   constructor(
     protected override fb: FormBuilder,
@@ -72,6 +73,10 @@ serviceDistrito = inject(DistritoService);
   ngOnInit(): void {
     this.listFuncao('');
     this.listUF();
+    if(this.usuario !== null){
+      this.listMunicipio(this.usuario.municipio_id, true);
+      this.listDistrito(this.usuario.distrito_id);
+    }
   }
   
 
@@ -90,15 +95,26 @@ serviceDistrito = inject(DistritoService);
    listUF(search?: string) {
     this.serviceDistrito.getUFs().subscribe({
       next: result => {
-        this.dropdownDistrito = result;
+        this.dropdownUF = result;
       }
     })
    }
 
-   listMunicipio(uf: any){
+   listMunicipio(uf: any, carregamento: boolean) {
+    this.selectedMunicipios = uf;
     this.serviceDistrito.getMunicipios(uf).subscribe({
       next: result => {
         this.dropdownMunicipios = result;
+       
+      }
+    })
+   }
+
+   listDistrito(id: any){
+    this.selectedMunicipios = id;
+    this.serviceDistrito.getDistritos(id).subscribe({
+      next: result => {
+        this.dropdownDistrito = result;
       }
     })
    }
@@ -112,6 +128,9 @@ serviceDistrito = inject(DistritoService);
       cpf: ['', Validators.required],
       complemento: ['', Validators.required],
       tipo: ['', Validators.required],
+      distrito_id: [null, Validators.required],
+      municipio_id: [null, Validators.required],
+      fk_id_funcao: [null, Validators.required],
     });
   }
   onPageSizeChange(newSize: number): void {
@@ -120,6 +139,9 @@ serviceDistrito = inject(DistritoService);
 
   onEdit(usuario: UsuarioModel) {
     this.form.patchValue(usuario);
+    this.activeEdit.set(true)
+    this.usuario = usuario;
+
   }
 
   onDelete(usuario: UsuarioModel) {
@@ -127,7 +149,20 @@ serviceDistrito = inject(DistritoService);
   }
 
   onSubmit(): void {
-    if (this.form.valid) {
+    this.form.get('distrito_id')?.setValue(this.selectedMunicipios);
+    this.form.get('municipio_id')?.setValue(this.selectedDistrito);
+
+    this.form.get('tipo')?.setValue(this.selectedTipoUsuario);
+    this.form.get('fk_id_funcao')?.setValue(this.selectedFuncao);
+
+    if (this.form.valid && this.activeEdit()) {
+      const usuario = {
+        ...this.form.value,
+        id_usuario: this.usuario?.id_usuario
+      };
+      this.atualizar(usuario);
+      this.form.reset();
+    } else if(this.form.valid) {
       this.salvar(this.form.value);
       this.form.reset();
     }

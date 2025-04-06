@@ -37,8 +37,14 @@
           step="0.1"
           class="w-full border px-2 py-1 rounded mt-1"
         />
+        <small class="text-red-500" *ngIf="form.get('nota_minima')?.hasError('required') && (form.get('nota_minima')?.touched || form.get('nota_minima')?.dirty)">
+          Campo obrigatório.
+        </small>
+        <small class="text-red-500" *ngIf="form.get('nota_minima')?.hasError('min') && (form.get('nota_minima')?.touched || form.get('nota_minima')?.dirty)">
+          Valor mínimo é 0.
+        </small>
       </label>
-
+      
       <label class="text-sm text-gray-600">
         Total de Perguntas:
         <input
@@ -46,7 +52,14 @@
           type="number"
           class="w-full border px-2 py-1 rounded mt-1"
         />
+        <small class="text-red-500" *ngIf="form.get('total_perguntas')?.hasError('required') && (form.get('total_perguntas')?.touched || form.get('total_perguntas')?.dirty)">
+          Campo obrigatório.
+        </small>
+        <small class="text-red-500" *ngIf="form.get('total_perguntas')?.hasError('min') && (form.get('total_perguntas')?.touched || form.get('total_perguntas')?.dirty)">
+          Valor mínimo é 1.
+        </small>
       </label>
+      
 
       <button
         type="submit"

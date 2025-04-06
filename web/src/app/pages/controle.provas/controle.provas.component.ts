@@ -88,6 +88,11 @@ export class ControleProvasComponent extends BaseController<ProvaModel> {
   onSubmit(): void {
     this.form.get('fk_id_curso')?.setValue(this.selectedCurso);
     
+    if (this.form.invalid) {
+      this.form.markAllAsTouched();
+      return;
+    }
+
     if (this.form.valid && this.activeEdit()) {
       const provaAtualizada = {
         ...this.form.value,
@@ -102,6 +107,6 @@ export class ControleProvasComponent extends BaseController<ProvaModel> {
   }
 
   onRowSelect(rows: ProvaModel[]) {
-    // console.log('Provas selecionadas:', rows);
+    
   }
 }

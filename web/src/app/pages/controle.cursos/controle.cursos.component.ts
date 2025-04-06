@@ -25,6 +25,7 @@ export class ControleCursosComponent extends BaseController<CursoModel> {
     super(fb, cursoService,'id_curso' );
     this.form = this.buildForm();
     this.carregar();
+    
   }
 
   columns = [
