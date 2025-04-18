@@ -19,23 +19,33 @@
   <!-- Formulário (vai cair no <ng-content select="[formulario]"> ) -->
   <div formulario>
     <form [formGroup]="form" (ngSubmit)="onSubmit()" class="flex flex-col gap-4">
-      <label class="text-sm text-gray-600">
-        Título:
-        <input 
-          formControlName="titulo"
-          type="text"
-          class="w-full border px-2 py-1 rounded mt-1"
-        />
-      </label>
+        <label class="text-sm text-gray-600">
+          titulo:
+          <input 
+            formControlName="titulo"
+            type="text"
+            class="w-full border px-2 py-1 rounded mt-1"
+          />
+        </label>
 
-      <label class="text-sm text-gray-600">
-        Descrição:
-        <textarea 
-          formControlName="descricao"
-          rows="4"
-          class="w-full border px-2 py-1 rounded mt-1"
-        ></textarea>
-      </label>
+        <label class="text-sm text-gray-600">
+          url_video:
+          <input 
+            formControlName="url_video"
+            type="text"
+            class="w-full border px-2 py-1 rounded mt-1"
+          />
+        </label>
+
+        <label class="text-sm text-gray-600">
+          duracao:
+          <input 
+            formControlName="duracao"
+            type="number"
+            class="w-full border px-2 py-1 rounded mt-1"
+          />
+        </label>
+
 
       <button type="submit" class="bg-primary text-white px-4 py-2 rounded hover:opacity-90 text-sm">
         Salvar

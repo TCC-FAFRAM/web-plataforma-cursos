@@ -48,7 +48,11 @@ export const routes: Routes = [
         loadChildren: () =>
           import('./pages/controle.certificados/controle.certificado.routes').then(m => m.controleCertificadosRoutes),
       },
-
+      {
+        path: '',
+        loadChildren: () =>
+          import('./pages/controle.funcao/controle.funcao.routes').then(m => m.controleFuncaoRoutes),
+      }
 
     ],
   },

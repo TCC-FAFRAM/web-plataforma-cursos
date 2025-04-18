@@ -15,8 +15,9 @@ import { ActivatedRoute } from '@angular/router';
   styleUrl: './controle.aulas.component.css'
 })
 export class ControleAulasComponent extends BaseController<AulaModel>  implements OnInit{
-  corso: AulaModel | null = null;
+  aula: AulaModel | null = null;
   titleCurse = '';
+  idCurso: number = 0;
   constructor(
     protected override fb: FormBuilder,
     aulaService: AulaService,
@@ -32,9 +33,10 @@ export class ControleAulasComponent extends BaseController<AulaModel>  implement
     const resolved = this.route.snapshot.data['aulas'];
     this.items.set(resolved?.data ?? []);
     this.titleCurse =  resolved?.data[0].Curso.titulo ?? 'Aulas';
+    this.idCurso = resolved?.data[0].Curso.id_curso;
   }
 
-  columns = [
+  columns = [ 
     { field: 'id_aula', label: 'ID' },
     { field: 'titulo', label: 'Título' },
     { field: 'descricao', label: 'Descrição' },
@@ -44,7 +46,8 @@ export class ControleAulasComponent extends BaseController<AulaModel>  implement
   buildForm(): FormGroup {
     return this.fb.group({
       titulo: ['', Validators.required],
-      descricao: ['', Validators.required],
+      url_video: ['', Validators.required],
+      duracao: [0, Validators.required],  
     });
   }
 
@@ -54,6 +57,8 @@ export class ControleAulasComponent extends BaseController<AulaModel>  implement
 
   onEdit(data: AulaModel) {
     this.form.patchValue(data);
+    this.activeEdit.set(true);
+    this.aula = data;
   }
 
   onDelete(data: AulaModel) {
@@ -61,9 +66,23 @@ export class ControleAulasComponent extends BaseController<AulaModel>  implement
   }
 
   onSubmit(): void {
+      
+    if (this.form.valid && this.activeEdit()) {
+     let newAula = {
+        id_aula: this.aula?.id_aula,
+        fk_id_curso: this.idCurso,
+        ...this.form.value
+      }
 
-    if (this.form.valid) {
-      this.salvar(this.form.value);
+      this.atualizar(newAula);
+      this.form.reset();
+    } else {
+      let newAula = {
+        fk_id_curso: this.idCurso,
+        ...this.form.value
+      }
+
+      this.salvar(newAula);
       this.form.reset();
     }
   }

@@ -12,7 +12,7 @@ import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-controle.cursos',
   standalone: true,
-  imports: [CommonModule, TableComponent, TableLayoutComponent, ReactiveFormsModule, DropdownComponent],
+  imports: [CommonModule, TableComponent, TableLayoutComponent, ReactiveFormsModule],
   templateUrl: './controle.cursos.component.html',
   styleUrl: './controle.cursos.component.css'
 })
