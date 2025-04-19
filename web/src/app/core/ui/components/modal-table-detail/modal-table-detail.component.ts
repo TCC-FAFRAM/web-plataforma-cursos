@@ -19,4 +19,9 @@ export class ModalTableDetailComponent {
   onClose() {
     this.close.emit();
   }
+
+  resolveField(row: any, field: string): any {
+    return field.split('.').reduce((acc, key) => acc?.[key], row);
+  }
+  
 }

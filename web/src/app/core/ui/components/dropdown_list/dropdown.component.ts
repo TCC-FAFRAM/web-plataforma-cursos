@@ -47,8 +47,9 @@ export class DropdownMultpleComponent implements ControlValueAccessor {
   onTouched = () => {};
 
   writeValue(value: any): void {
-    this.selectedValues = this.multiple ? value || [] : [value];
+    this.selectedValues = this.multiple ? [...(value || [])] : [value];
   }
+  
 
   registerOnChange(fn: any): void {
     this.onChange = fn;
@@ -69,24 +70,29 @@ export class DropdownMultpleComponent implements ControlValueAccessor {
 
   selectItem(item: any): void {
     const val = item[this.valueKey];
-
+  
     if (this.multiple) {
       if (this.isSelected(item)) {
+        // Remover valor
         this.selectedValues = this.selectedValues.filter(v => v !== val);
       } else {
-        this.selectedValues.push(val);
+        // Adicionar valor
+        this.selectedValues = [...this.selectedValues, val];
       }
-      this.onChange(this.selectedValues);
+  
+      this.onChange([...this.selectedValues]); // importante clonar
+      this.selected.emit([...this.selectedValues]); // emite atualizado
     } else {
       this.selectedValues = [val];
       this.onChange(val);
+      this.selected.emit(val);
       this.isOpen.set(false);
     }
-
-    this.selected.emit(this.selectedValues);
-    this.def.detectChanges();
+  
+    this.def.detectChanges(); // força atualização na view
   }
-
+  
+  
   getSelectedLabel(): string {
     if (!this.selectedValues.length) return this.placeholder;
     if (this.multiple) {

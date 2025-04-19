@@ -6,11 +6,13 @@ import { BaseController } from '../../../services/base.crud.controller';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AulaService } from '../../../services/curso/aula.service';
 import { ActivatedRoute } from '@angular/router';
+import { RouterSubmenu } from '../../../dtos/submenu/submenu.dto';
+import { SubmenuComponent } from "../../../core/ui/components/submenu/submenu.component";
 
 @Component({
   selector: 'app-controle.aulas',
   standalone: true,
-  imports: [TableLayoutComponent, TableComponent, TableComponent, TableLayoutComponent, ReactiveFormsModule],
+  imports: [TableLayoutComponent, TableComponent, TableComponent, TableLayoutComponent, ReactiveFormsModule, SubmenuComponent],
   templateUrl: './controle.aulas.component.html',
   styleUrl: './controle.aulas.component.css'
 })
@@ -18,6 +20,25 @@ export class ControleAulasComponent extends BaseController<AulaModel>  implement
   aula: AulaModel | null = null;
   titleCurse = '';
   idCurso: number = 0;
+
+  routerSubmenu: RouterSubmenu[]= [ 
+      {
+        active: false,
+        label: 'Cursos',
+        router: '/controlecursos'
+      },
+      {
+        active: false,
+        label: 'Modulos',
+        router: '/controlemodulos'
+      },
+      {
+        active: true,
+        label: 'Aulas',
+        router: '/controleaula'
+      }
+  
+    ];
   constructor(
     protected override fb: FormBuilder,
     aulaService: AulaService,

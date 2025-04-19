@@ -6,6 +6,8 @@
   (pageChange)="onPageChange($event)"
   (pageSizeChange)="onPageSizeChange($event)"
 >
+
+<app-submenu [items]="routerSubmenu" submenu></app-submenu>
   <!-- Tabela -->
   <app-table
     [columns]="columns"

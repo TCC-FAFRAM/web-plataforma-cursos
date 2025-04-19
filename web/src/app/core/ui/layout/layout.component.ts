@@ -5,11 +5,12 @@ import { IconComponent } from "../components/icone/icone.component";
 import { LayoutService } from './layout.component.service';
 import { ProfileMenuComponent } from "./components/profile-menu/profile-menu.component";
 import { AlertComponent } from "../components/alert/alert.component";
+import { SubmenuComponent } from "../components/submenu/submenu.component";
 
 @Component({
   selector: 'app-layout',
   standalone: true,
-  imports: [CommonModule, RouterOutlet, IconComponent, ProfileMenuComponent, AlertComponent],
+  imports: [CommonModule, RouterOutlet, IconComponent, ProfileMenuComponent, AlertComponent, SubmenuComponent],
   templateUrl: './layout.component.html',
   styleUrls: ['./layout.component.css'],
 })

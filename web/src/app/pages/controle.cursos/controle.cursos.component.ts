@@ -7,17 +7,37 @@ import { TableComponent } from '../../core/ui/components/table/table.component';
 import { TableLayoutComponent } from '../../core/ui/components/table-layout/table-layout.component';
 import { DropdownComponent } from '../../core/ui/components/dropdown/dropdown.component';
 import { CommonModule } from '@angular/common';
+import { SubmenuComponent } from "../../core/ui/components/submenu/submenu.component";
+import { RouterSubmenu } from '../../dtos/submenu/submenu.dto';
 
 
 @Component({
   selector: 'app-controle.cursos',
   standalone: true,
-  imports: [CommonModule, TableComponent, TableLayoutComponent, ReactiveFormsModule],
+  imports: [CommonModule, TableComponent, TableLayoutComponent, ReactiveFormsModule, SubmenuComponent],
   templateUrl: './controle.cursos.component.html',
   styleUrl: './controle.cursos.component.css'
 })
 export class ControleCursosComponent extends BaseController<CursoModel> {
   corso: CursoModel | null = null;
+  routerSubmenu: RouterSubmenu[]= [ 
+    {
+      active: true,
+      label: 'Cursos',
+      router: '/controlecursos'
+    },
+    {
+      active: false,
+      label: 'Modulos',
+      router: '/controlemodulos'
+    },
+    {
+      active: false,
+      label: 'Aulas',
+      router: '/controleaula'
+    }
+
+  ];
   constructor(
     protected override fb: FormBuilder,
     cursoService: CursoService

@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, Output, EventEmitter, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { SubmenuComponent } from "../submenu/submenu.component";
 
 @Component({
   selector: 'app-table-layout',

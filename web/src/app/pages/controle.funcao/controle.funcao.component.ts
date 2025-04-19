@@ -9,14 +9,15 @@ import { TableLayoutComponent } from '../../core/ui/components/table-layout/tabl
 import { DropdownMultpleComponent } from '../../core/ui/components/dropdown_list/dropdown.component';
 import { CursoService } from '../../services/curso/curso.service';
 import { convertDropdownList, DropdownDTO } from '../../dtos/dropdown/dropdown.dto';
+import { SubmenuComponent } from "../../core/ui/components/submenu/submenu.component";
 
 @Component({
   selector: 'app-controle.funcao',
   standalone: true,
-  imports: [CommonModule, TableComponent, TableLayoutComponent, ReactiveFormsModule, DropdownMultpleComponent],
+  imports: [CommonModule, TableComponent, TableLayoutComponent, ReactiveFormsModule, DropdownMultpleComponent, SubmenuComponent],
   templateUrl: './controle.funcao.component.html',
-
 })
+
 export class ControleFuncaoComponent extends BaseController<FuncaoModel> implements OnInit {
    form2 = new FormGroup({
     categorias: new FormControl([]), 
@@ -57,8 +58,18 @@ export class ControleFuncaoComponent extends BaseController<FuncaoModel> impleme
   columns = [
     { field: 'id_funcao', label: 'ID' },
     { field: 'nome', label: 'Nome' },
-    { field: 'descricao', label: 'Descrição' }
-  ]; 
+    { field: 'descricao', label: 'Descrição' },
+    {
+      field: 'FuncaoCurso',
+      label: 'Cursos',
+      isArray: true,
+      columnsInside: [
+        { field: 'Curso.titulo', label: 'Título' },
+        { field: 'Curso.descricao', label: 'Descrição' }
+      ]
+    }
+  ];
+  
 
   buildForm(): FormGroup {
     return this.fb.group({
@@ -76,6 +87,17 @@ export class ControleFuncaoComponent extends BaseController<FuncaoModel> impleme
     this.form.patchValue(data);
     this.activeEdit.set(true);
     this.funcaoModel = data;
+    const cursosSelecionados = data.FuncaoCurso?.map(fc => fc.fk_id_curso) ?? [];
+
+  // Preenche os dados no form
+  this.form.patchValue({
+    nome: data.nome,
+    descricao: data.descricao,
+    cursos: cursosSelecionados
+  });
+
+  this.activeEdit.set(true);
+  this.funcaoModel = data;
   }
 
   onDelete(data: FuncaoModel) {
@@ -92,7 +114,8 @@ export class ControleFuncaoComponent extends BaseController<FuncaoModel> impleme
       this.form.reset();
     }
     else
-    if (this.form.valid) {
+    if (this.form.valid) {  
+      console.log(this.form.value);
       this.salvar(this.form.value);
       this.form.reset();
     }

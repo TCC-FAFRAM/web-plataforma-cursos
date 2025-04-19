@@ -34,6 +34,8 @@ export interface UsuarioModel {
   export interface FuncaoModel { 
     id_funcao: number;
     nome: string;
+    descricao: string;
+    FuncaoCurso: FuncaoCursoModel[];
   }
   
   export interface CursoModel {
@@ -45,6 +47,7 @@ export interface UsuarioModel {
   export interface FuncaoCursoModel {
     fk_id_funcao: number;
     fk_id_curso: number;
+    Curso: CursoModel;
   }
   
   export interface AulaModel {
@@ -108,5 +111,23 @@ export interface UsuarioModel {
     dados_antigos?: any;
     dados_novos?: any;
     data_registro: string;
+  }
+  
+
+  export interface ModuloModel {
+    id_modulo: number;
+    titulo: string;
+    descricao: string;
+    ordem: number;
+    concluido: boolean;
+    fk_id_curso: number;
+    fk_id_modulo_anterior?: number | null;
+  
+    // Relacionamentos
+    Curso?: CursoModel;
+    Aulas?: AulaModel[];
+    ModuloAnterior?: ModuloModel | null;
+    ModulosPosteriores?: ModuloModel[];
+    Prova?: ProvaModel | null;
   }
   

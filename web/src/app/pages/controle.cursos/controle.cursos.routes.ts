@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 import { ControleCursosComponent } from './controle.cursos.component';
 import { AulasResolver } from '../../resolvers/aulas.resolver';
 import { ControleAulasComponent } from './controle.aulas/controle.aulas.component';
+import { ControleModulosComponent } from './controle.modulos/controle.modulos.component';
 
 
 
@@ -18,6 +19,15 @@ export const controleCursosRoutes: Routes = [
   resolve: {
     aulas: AulasResolver
   }
+},
+{
+  path: 'controlemodulos',
+  loadComponent: () => ControleModulosComponent,
+  providers: [], 
+},
+{
+  path: 'controleaula',
+  loadComponent: () => ControleAulasComponent,
 }
 
   

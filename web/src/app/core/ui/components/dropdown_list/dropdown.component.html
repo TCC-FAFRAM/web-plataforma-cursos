@@ -35,13 +35,14 @@
       (click)="selectItem(item)"
       class="px-3 py-2 hover:bg-gray-100 cursor-pointer flex items-center gap-2"
     >
-      <input
+        <input
         *ngIf="multiple"
         type="checkbox"
         [checked]="isSelected(item)"
         class="form-checkbox h-4 w-4 text-blue-600"
-        (click)="$event.stopPropagation()"
+        (change)="selectItem(item); $event.stopPropagation()"
       />
+  
       {{ item[labelKey] }}
     </li>
 
