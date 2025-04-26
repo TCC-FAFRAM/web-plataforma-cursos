@@ -4,7 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng build --configuration production",
-    "build": "node increment-version.js && ng build --configuration production",
+    "build": "ng build --configuration production",
     "watch": "ng build --watch --configuration development",
     "prettier": "npx prettier --write .",
     "test": "ng test",
