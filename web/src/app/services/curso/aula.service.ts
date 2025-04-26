@@ -1,10 +1,10 @@
 
 import { Injectable } from '@angular/core';
 import { BaseCrudService} from '../base.crud.service';
-import { AulaModel, CertificadoModel, CursoModel, UsuarioModel } from '../../models/usuario/controle.usuario.model';
+import { AulaModel,} from '../../models/usuario/controle.usuario.model';
 import { PagedResult } from '../base.crud.controller';
 import { Observable } from 'rxjs';
-import { HttpParams } from '@angular/common/http';
+
 
 
 
@@ -13,7 +13,7 @@ import { HttpParams } from '@angular/common/http';
 })
 export class AulaService extends BaseCrudService<AulaModel> {
   constructor() {
-    super('aula'); 
+    super('aula');
   }
 
    getAllByCurso(id: number | string): Observable<PagedResult<AulaModel>> {

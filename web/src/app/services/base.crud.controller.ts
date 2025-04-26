@@ -1,6 +1,6 @@
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { inject, Signal, signal } from '@angular/core';
-import { HttpParams, HttpParamsOptions } from '@angular/common/http';
+import { inject, signal } from '@angular/core';
+import {  HttpParamsOptions } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { AlertService } from '../core/ui/components/alert/alert.component.service';
 
@@ -62,7 +62,7 @@ export abstract class BaseController<T> {
         this.total.set(res.total);
       },
       error: (err: Error) => {this.logError('carregar itens', err)
-        
+
       },
       complete: () => this.loading.set(false),
     });
@@ -81,10 +81,10 @@ export abstract class BaseController<T> {
       },
       error: (err: Error) => {
         this.logError('criar', err);
-        
+
       },
     });
-  } 
+  }
 
   atualizar(item: T): void {
     this.id.set(item[this.idField] as unknown as number);
@@ -94,7 +94,7 @@ export abstract class BaseController<T> {
         this.carregar();
       },
       error: (err: Error) => {this.logError('atualizar', err)
-        
+
       },
     });
   }
@@ -108,7 +108,7 @@ export abstract class BaseController<T> {
       error: (err: Error) => {
         this.logError('deletar', err)
         console.log(err);
-        
+
       },
     });
   }

@@ -8,7 +8,6 @@ import { TableComponent } from '../../core/ui/components/table/table.component';
 import { CommonModule } from '@angular/common';
 import { DropdownComponent } from '../../core/ui/components/dropdown/dropdown.component';
 import { convertDropdownList, DropdownDTO } from '../../dtos/dropdown/dropdown.dto';
-import { UsuarioService } from '../../services/autenticacao/usuario.service';
 import { UsuariosService } from '../../services/usuarios/usuario.service';
 import { CursoService } from '../../services/curso/curso.service';
 
@@ -22,7 +21,7 @@ import { CursoService } from '../../services/curso/curso.service';
 export class ControleCertificadosComponent extends BaseController<CertificadoModel> {
   serviceUsuario = inject(UsuariosService);
   serviceCurso = inject(CursoService);
-  certificado: CertificadoModel | null  = null;  
+  certificado: CertificadoModel | null  = null;
 
   columns = [
     { field: 'id_certificado', label: 'ID' },
@@ -51,15 +50,15 @@ export class ControleCertificadosComponent extends BaseController<CertificadoMod
    dropdownItemsCertificado: DropdownDTO[] = []
    selectedCetificado = '';
    selectedCertificadoLabel = 'Selecione o Certificado';
-  
-  
+
+
 
     ngOnInit(): void {
       this.listUsuasio('');
       this.listCursos('');
     }
-    
-  
+
+
      listUsuasio(search?: string) {
       this.serviceUsuario.getAll({
         fromObject: {
@@ -113,7 +112,7 @@ export class ControleCertificadosComponent extends BaseController<CertificadoMod
 
     this.selectedOptions = certificado.status;
     this.selectedCetificado = certificado.Curso.id_curso.toString();
-    
+
     this.selectedCertificadoLabel = certificado.Curso.titulo;
 
     this.certificado = certificado;
@@ -134,7 +133,7 @@ export class ControleCertificadosComponent extends BaseController<CertificadoMod
     if (this.form.valid && this.activeEdit()) {
       const provaAtualizada = {
         ...this.form.value,
-        id_certificado: this.certificado?.id_certificado 
+        id_certificado: this.certificado?.id_certificado
       };
       this.atualizar(provaAtualizada);
       this.form.reset();

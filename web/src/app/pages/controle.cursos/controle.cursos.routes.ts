@@ -13,9 +13,9 @@ export const controleCursosRoutes: Routes = [
     loadComponent: () => ControleCursosComponent,
   },
   {
-  path: 'controlecursos/:idCurso/aula',
+  path: 'controleaula/:idCurso/aula',
   loadComponent: () => ControleAulasComponent,
-  providers: [AulasResolver], 
+  providers: [AulasResolver],
   resolve: {
     aulas: AulasResolver
   }
@@ -23,14 +23,14 @@ export const controleCursosRoutes: Routes = [
 {
   path: 'controlemodulos',
   loadComponent: () => ControleModulosComponent,
-  providers: [], 
+  providers: [],
 },
 {
   path: 'controleaula',
   loadComponent: () => ControleAulasComponent,
 }
 
-  
+
 ];
 
 

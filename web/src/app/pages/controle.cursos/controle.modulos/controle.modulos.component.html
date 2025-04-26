@@ -1,13 +1,13 @@
 <app-table-layout
-  title="Cursos"
-  titleButton="Curso"
+  title="Modulos"
+  titleButton="Modulo"
   [total]="total()"
   [pageSize]="take()"
   (pageChange)="onPageChange($event)"
   (pageSizeChange)="onPageSizeChange($event)"
 >
 <app-submenu [items]="routerSubmenu" submenu>
-  
+
 </app-submenu>
   <!-- Tabela -->
   <app-table
@@ -24,7 +24,7 @@
     <form [formGroup]="form" (ngSubmit)="onSubmit()" class="flex flex-col gap-4">
       <label class="text-sm text-gray-600">
         Título:
-        <input 
+        <input
           formControlName="titulo"
           type="text"
           class="w-full border px-2 py-1 rounded mt-1"
@@ -33,12 +33,32 @@
 
       <label class="text-sm text-gray-600">
         Descrição:
-        <textarea 
+        <textarea
           formControlName="descricao"
           rows="4"
           class="w-full border px-2 py-1 rounded mt-1"
         ></textarea>
       </label>
+
+      <label class="text-sm text-gray-600">
+        Ordem:
+        <input
+          formControlName="ordem"
+          type="number"
+          class="w-full border px-2 py-1 rounded mt-1"
+        />
+      </label>
+
+      <label class="text-sm text-gray-600">
+        Curso
+        <app-dropdown
+          [items]="dropdownItemsCurso"
+          [selectedValue]="selectedCurso"
+          [placeholder]="selectedCursoLabel"
+          (selected)="selectedCurso = $event">
+        </app-dropdown>
+      </label>
+
 
       <button type="submit" class="bg-primary text-white px-4 py-2 rounded hover:opacity-90 text-sm">
         Salvar
@@ -46,3 +66,7 @@
     </form>
   </div>
 </app-table-layout>
+
+
+
+

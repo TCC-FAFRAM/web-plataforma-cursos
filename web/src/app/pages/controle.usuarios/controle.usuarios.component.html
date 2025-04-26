@@ -5,15 +5,19 @@
   [pageSize]="take()"
   (pageChange)="onPageChange($event)"
   (pageSizeChange)="onPageSizeChange($event)"
+  [createdFormbaseActive]="false"
+  [activeFormulario]="activeFormulario"
 >
   <!-- Tabela -->
   <app-table
     [columns]="columns"
     [data]="items()"
-    [selectable]="true"
+    [selectable]="false"
     (edit)="onEdit($event)"
     (delete)="onDelete($event)"
     (rowSelected)="onRowSelect($event)"
+
+
   ></app-table>
 
   <!-- Formulário (vai cair no <ng-content select="[formulario]"> ) -->
@@ -21,68 +25,66 @@
     <form [formGroup]="form" (ngSubmit)="onSubmit()" class="flex flex-col gap-4">
       <label class="text-sm text-gray-600">
         Nome:
-        <input 
+        <input
           formControlName="nome"
-          type="text" 
+          type="text"
           class="w-full border px-2 py-1 rounded mt-1" />
       </label>
 
       <label class="text-sm text-gray-600">
         Sobre Nome:
-        <input 
+        <input
           formControlName="sobre_nome"
-          type="text" 
+          type="text"
           class="w-full border px-2 py-1 rounded mt-1" />
       </label>
 
       <label class="text-sm text-gray-600">
         CPF:
-        <input 
+        <input
           formControlName="cpf"
-          type="text" 
+          type="text"
           class="w-full border px-2 py-1 rounded mt-1" />
       </label>
 
       <label class="text-sm text-gray-600">
         Email:
-        <input 
+        <input
           formControlName="email"
-          type="email" 
+          type="email"
           class="w-full border px-2 py-1 rounded mt-1" />
       </label>
 
-      <label class="text-sm text-gray-600"> 
-        Função  
-        <app-dropdown
-          [items]="dropdownItemsFuncao"
-          [selectedValue]="selectedFuncao"
-          [placeholder]="'Selecione o tipo de usuário'"
-          (selected)="selectedFuncao = $event">
-        </app-dropdown>
-      </label>
-
-      <label class="text-sm text-gray-600"> 
-        Fazenda
-        <app-dropdown
-          [items]="dropdownItems"
-          [selectedValue]="selectedTipoUsuario"
-          [placeholder]="'Selecione a Fazenda'"
-          (selected)="selectedTipoUsuario = $event">
-        </app-dropdown>
-      </label>
-
-      <label class="text-sm text-gray-600"> 
-        Estado
-        <app-dropdown
-          [items]="dropdownUF"
-          [selectedValue]="selectedUF"
-          [placeholder]="'Selecione o Estado'"
-          (selected)="listMunicipio($event, false)">
-        </app-dropdown>
-      </label>
+      <label class="text-sm text-gray-600">
+       Função
+       <app-dropdown
+         [items]="dropdownItemsFuncao"
+         [selectedValue]="selectedFuncao"
+         [placeholder]="'Selecione o tipo de usuário'"
+         (selected)="selectedFuncao = $event">
+       </app-dropdown>
+     </label>
+     <label class="text-sm text-gray-600">
+       Fazenda
+       <app-dropdown
+         [items]="dropdownItems"
+         [selectedValue]="selectedTipoUsuario"
+         [placeholder]="'Selecione a Fazenda'"
+         (selected)="selectedTipoUsuario = $event">
+       </app-dropdown>
+     </label>
+     <label class="text-sm text-gray-600">
+       Estado
+       <app-dropdown
+         [items]="dropdownUF"
+         [selectedValue]="selectedUF"
+         [placeholder]="'Selecione o Estado'"
+         (selected)="listMunicipio($event, false)">
+       </app-dropdown>
+     </label>
 
 
-      <label class="text-sm text-gray-600"> 
+      <label class="text-sm text-gray-600">
         Município
         <app-dropdown
           [items]="dropdownMunicipios"
@@ -92,7 +94,7 @@
         </app-dropdown>
       </label>
 
-      <label class="text-sm text-gray-600"> 
+      <label class="text-sm text-gray-600">
         Distrito
         <app-dropdown
           [items]="dropdownDistrito"
@@ -105,7 +107,7 @@
 
       <label class="text-sm text-gray-600">
         Complemento:
-        <textarea  
+        <textarea
           formControlName="complemento"
           rows="4"
           class="w-full border px-2 py-1 rounded mt-1">
