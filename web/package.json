@@ -3,8 +3,8 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
-    "build": "node increment-version.js && ng build",
+    "start": "ng build --configuration production",
+    "build": "node increment-version.js && ng build --configuration production",
     "watch": "ng build --watch --configuration development",
     "prettier": "npx prettier --write .",
     "test": "ng test",

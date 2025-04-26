@@ -1,7 +1,7 @@
 export const environment = {
   versao: '1.0.0',
   production: true,
-  apiUrl: 'http://100.80.191.98:3000/api',
+  apiUrl: 'https://backend-production-feeb.up.railway.app/api',
   appKey: '',
   appName: 'Plataforma Cursos Online',
 };
