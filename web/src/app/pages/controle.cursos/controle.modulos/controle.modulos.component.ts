@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+
+import { Component, inject } from '@angular/core';
 import { TableComponent } from "../../../core/ui/components/table/table.component";
 import { TableLayoutComponent } from "../../../core/ui/components/table-layout/table-layout.component";
 import { RouterSubmenu } from '../../../dtos/submenu/submenu.dto';
@@ -7,17 +8,23 @@ import { ModuloModel } from '../../../models/usuario/controle.usuario.model';
 import { ModuloService } from '../../../services/curso/modulo.service';
 import { BaseController } from '../../../services/base.crud.controller';
 import { SubmenuComponent } from "../../../core/ui/components/submenu/submenu.component";
+import { CursoService } from '../../../services/curso/curso.service';
+import { convertDropdownList, DropdownDTO } from '../../../dtos/dropdown/dropdown.dto';
+import { DropdownComponent } from "../../../core/ui/components/dropdown/dropdown.component";
 
 @Component({
   selector: 'app-controle.modulos',
   standalone: true,
-  imports: [TableComponent, TableLayoutComponent, SubmenuComponent, ReactiveFormsModule],
+  imports: [TableComponent, TableLayoutComponent, SubmenuComponent, ReactiveFormsModule, DropdownComponent],
   templateUrl: './controle.modulos.component.html',
   styleUrl: './controle.modulos.component.css'
 })
 export class ControleModulosComponent extends BaseController<ModuloModel> {
    data: ModuloModel | null = null;
-  routerSubmenu: RouterSubmenu[]= [ 
+   serviceCurso = inject(CursoService);
+
+
+  routerSubmenu: RouterSubmenu[]= [
     {
       active: false,
       label: 'Cursos',
@@ -35,6 +42,21 @@ export class ControleModulosComponent extends BaseController<ModuloModel> {
     }
 
   ];
+
+  columns = [
+    { field: 'id_modulo', label: 'ID' },
+    { field: 'titulo', label: 'Título' },
+    { field: 'descricao', label: 'Descrição' },
+    { field: 'ordem', label: 'Ordemss' },
+    { field: 'Curso.titulo', label: 'Curso' },
+  ];
+
+     dropdownItemsCurso: DropdownDTO[] = []
+     selectedCurso = 0;
+     selectedCursoLabel = 'Selecione o Curso';
+
+
+
   constructor(
     protected override fb: FormBuilder,
     cursoService: ModuloService
@@ -42,21 +64,38 @@ export class ControleModulosComponent extends BaseController<ModuloModel> {
     super(fb, cursoService,'id_modulo' );
     this.form = this.buildForm();
     this.carregar();
-    
+
   }
 
-  columns = [
-    { field: 'id_curso', label: 'ID' },
-    { field: 'titulo', label: 'Título' },
-    { field: 'descricao', label: 'Descrição' }
-  ]; 
+  ngOnInit(): void {
+    this.listCursos('');
+  }
+
+
+  listCursos(search?: string) {
+      this.serviceCurso.getAll({
+        fromObject: {
+          search: search  ?? ''
+        }
+      }).subscribe({
+        next: result => {
+          this.dropdownItemsCurso = convertDropdownList(result.data, ['titulo','id_curso']);
+        }
+      })
+     }
+
+
+
 
   buildForm(): FormGroup {
     return this.fb.group({
       titulo: ['', Validators.required],
       descricao: ['', Validators.required],
+      ordem: [0, Validators.required],
+      fk_id_curso: [null, Validators.required],
     });
   }
+
 
   onPageSizeChange(newSize: number): void {
     this.take.set(newSize);
@@ -64,6 +103,11 @@ export class ControleModulosComponent extends BaseController<ModuloModel> {
 
   onEdit(data: ModuloModel) {
     this.form.patchValue(data);
+    this.activeEdit.set(true);
+    this.form.get('fk_id_curso')?.setValue(this.selectedCurso);
+    this.data = data;
+    this.selectedCurso = data.Curso?.id_curso;
+    this.selectedCursoLabel = data.Curso?.titulo;
   }
 
   onDelete(data: ModuloModel) {
@@ -71,7 +115,17 @@ export class ControleModulosComponent extends BaseController<ModuloModel> {
   }
 
   onSubmit(): void {
+    this.form.get('fk_id_curso')?.setValue(this.selectedCurso);
 
+    if (this.form.valid && this.activeEdit()) {
+      const provaAtualizada = {
+        ...this.form.value,
+        id_modulo: this.data?.id_modulo
+      };
+      this.atualizar(provaAtualizada);
+      this.form.reset();
+    }
+    else
     if (this.form.valid) {
       this.salvar(this.form.value);
       this.form.reset();

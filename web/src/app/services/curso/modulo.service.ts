@@ -1,7 +1,7 @@
 
 import { Injectable } from '@angular/core';
 import { BaseCrudService} from '../base.crud.service';
-import { CertificadoModel, CursoModel, ModuloModel, UsuarioModel } from '../../models/usuario/controle.usuario.model';
+import { ModuloModel } from '../../models/usuario/controle.usuario.model';
 
 
 
@@ -10,7 +10,7 @@ import { CertificadoModel, CursoModel, ModuloModel, UsuarioModel } from '../../m
 })
 export class ModuloService extends BaseCrudService<ModuloModel> {
   constructor() {
-    super('modulo'); 
+    super('modulo');
   }
 
 

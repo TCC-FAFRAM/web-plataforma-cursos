@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { TableComponent } from "../../core/ui/components/table/table.component";
 import { TableLayoutComponent } from "../../core/ui/components/table-layout/table-layout.component";
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -22,7 +22,8 @@ import { DistritoService } from '../../services/ditrito/distrito.service';
 export class ControleUsuariosComponent extends BaseController<UsuarioModel> implements  OnInit {
 serviceFuncao = inject(FuncaoService);
 serviceDistrito = inject(DistritoService);
-usuario: UsuarioModel | null = null; 
+activeFormulario = signal(false);
+usuario: UsuarioModel | null = null;
 
   columns = [
     { field: 'id_usuario', label: 'ID' },
@@ -40,8 +41,8 @@ usuario: UsuarioModel | null = null;
       ]
     }
   ];
-  
-  
+
+
 
   dropdownItems = [
     { label: 'Administrador', value: 'ADMIN' },
@@ -78,7 +79,7 @@ usuario: UsuarioModel | null = null;
       this.listDistrito(this.usuario.distrito_id);
     }
   }
-  
+
 
    listFuncao(search?: string) {
     this.serviceFuncao.getAll({
@@ -105,7 +106,7 @@ usuario: UsuarioModel | null = null;
     this.serviceDistrito.getMunicipios(uf).subscribe({
       next: result => {
         this.dropdownMunicipios = result;
-       
+
       }
     })
    }
@@ -127,20 +128,21 @@ usuario: UsuarioModel | null = null;
       sobre_nome: ['', Validators.required],
       cpf: ['', Validators.required],
       complemento: ['', Validators.required],
-      tipo: ['', Validators.required],
-      distrito_id: [null, Validators.required],
-      municipio_id: [null, Validators.required],
-      fk_id_funcao: [null, Validators.required],
+    //  tipo: [''],
+    //  distrito_id: [null],
+    //  municipio_id: [null],
+     fk_id_funcao: [null],
     });
   }
   onPageSizeChange(newSize: number): void {
-    this.take.set(newSize);       
-  }   
+    this.take.set(newSize);
+  }
 
   onEdit(usuario: UsuarioModel) {
     this.form.patchValue(usuario);
     this.activeEdit.set(true)
     this.usuario = usuario;
+    this.activeFormulario.set(true);
 
   }
 
@@ -161,17 +163,14 @@ usuario: UsuarioModel | null = null;
         id_usuario: this.usuario?.id_usuario
       };
       this.atualizar(usuario);
-      this.form.reset();
-    } else if(this.form.valid) {
-      this.salvar(this.form.value);
-      this.form.reset();
-    }
+      }
+
   }
 
   onRowSelect(rows: UsuarioModel[]) {
     console.log('Selecionados:', rows);
   }
-  
+
 }
 
 

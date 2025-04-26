@@ -1,8 +1,8 @@
 
-<ng-content select="[submenu]"></ng-content>
-  
 
-<div style="height: 90%;" class="flex w-full gap-2">
+
+
+<div class="flex w-full h-full gap-2">
 
   <!-- Tabela com paginação -->
   <div
@@ -23,13 +23,13 @@
         >
           <option *ngFor="let size of itemsPerPageOptions" [value]="size">{{ size }}</option>
         </select>
-        
-        </div>
 
+        </div>
+        @if(createdFormbaseActive === true){
         <button *ngIf="!activeFormulario()" (click)="setActiveFormulrio(true)"
           class="text-white hover:opacity-90 bg-primary px-4 py-2 rounded text-sm font-medium w-full sm:w-auto">
           + Novo {{ titleButton }}
-        </button>
+        </button>}
       </div>
     </div>
 

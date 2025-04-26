@@ -23,7 +23,7 @@
     <form [formGroup]="form" (ngSubmit)="onSubmit()" class="flex flex-col gap-4">
         <label class="text-sm text-gray-600">
           titulo:
-          <input 
+          <input
             formControlName="titulo"
             type="text"
             class="w-full border px-2 py-1 rounded mt-1"
@@ -31,8 +31,17 @@
         </label>
 
         <label class="text-sm text-gray-600">
+          Descricao:
+          <input
+            formControlName="descricao"
+            type="text"
+            class="w-full border px-2 py-1 rounded mt-1"
+          />
+        </label>
+
+        <label class="text-sm text-gray-600">
           url_video:
-          <input 
+          <input
             formControlName="url_video"
             type="text"
             class="w-full border px-2 py-1 rounded mt-1"
@@ -41,11 +50,21 @@
 
         <label class="text-sm text-gray-600">
           duracao:
-          <input 
+          <input
             formControlName="duracao"
             type="number"
             class="w-full border px-2 py-1 rounded mt-1"
           />
+        </label>
+
+        <label class="text-sm text-gray-600">
+          Modulo
+          <app-dropdown
+            [items]="dropdownItemsModulo"
+            [selectedValue]="selectedModulo"
+            [placeholder]="selectedModuloLabel"
+            (selected)="selectedModulo= $event">
+          </app-dropdown>
         </label>
 
 

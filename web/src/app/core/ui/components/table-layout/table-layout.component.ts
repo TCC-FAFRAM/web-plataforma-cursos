@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, Output, EventEmitter, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { SubmenuComponent } from "../submenu/submenu.component";
 
 @Component({
   selector: 'app-table-layout',
@@ -15,14 +14,17 @@ export class TableLayoutComponent {
   @Input() title: string = '';
   @Input() titleButton: string = '';
   @Input() total: number = 0;               // <- total de itens
-  @Input() pageSize: number = 10;           // <- itens por página
+  @Input() pageSize: number = 10;
+  @Input() createdFormbaseActive = true;        // <- itens por página
 
   // Eventos
   @Output() pageChange = new EventEmitter<number>();
   @Output() pageSizeChange = new EventEmitter<number>();
 
   currentPage = 1;
-  activeFormulario = signal(false);
+  @Input() activeFormulario = signal(false);
+
+
 
   itemsPerPageOptions = [10, 25, 50];
 
@@ -62,11 +64,11 @@ export class TableLayoutComponent {
   onItemsPerPageChange(event: Event) {
     const target = event.target as HTMLSelectElement;
     const newSize = parseInt(target.value, 10);
-  
+
     this.currentPage = 1; // volta pra página 1
     this.pageSize = newSize;
-  
+
     this.pageSizeChange.emit(newSize); // ✅ emite pro componente pai
   }
-  
+
 }
