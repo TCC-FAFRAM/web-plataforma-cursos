@@ -19,7 +19,7 @@ import { RouterSubmenu } from '../../dtos/submenu/submenu.dto';
   styleUrl: './controle.cursos.component.css'
 })
 export class ControleCursosComponent extends BaseController<CursoModel> {
-  corso: CursoModel | null = null;
+  data: CursoModel | null = null;
   routerSubmenu: RouterSubmenu[]= [ 
     {
       active: true,
@@ -58,6 +58,7 @@ export class ControleCursosComponent extends BaseController<CursoModel> {
     return this.fb.group({
       titulo: ['', Validators.required],
       descricao: ['', Validators.required],
+      url_img: ['', Validators.required],
     });
   }
 
@@ -67,6 +68,9 @@ export class ControleCursosComponent extends BaseController<CursoModel> {
 
   onEdit(curso: CursoModel) {
     this.form.patchValue(curso);
+    this.activeEdit.set(true);
+    this.data = curso;
+
   }
 
   onDelete(curso: CursoModel) {
@@ -74,12 +78,25 @@ export class ControleCursosComponent extends BaseController<CursoModel> {
   }
 
   onSubmit(): void {
-
-    if (this.form.valid) {
-      this.salvar(this.form.value);
-      this.form.reset();
-    }
-  }
+    if (this.form.valid && this.activeEdit()) {
+      const newAula = {
+         id_curso: this.data?.id_curso,
+         ...this.form.value
+       }
+ 
+       this.atualizar(newAula);
+       this.form.reset();
+       this.activeEdit.set(false);
+     } else {
+       const newAula = {
+         ...this.form.value
+       }
+ 
+       this.salvar(newAula);
+       this.form.reset();
+     }
+   }
+  
 
   onRowSelect(rows: CursoModel[]) {
     console.log('Cursos selecionados:', rows);

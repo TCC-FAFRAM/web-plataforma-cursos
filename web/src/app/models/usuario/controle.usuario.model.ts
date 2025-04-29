@@ -43,6 +43,7 @@ export interface UsuarioModel {
     id_curso: number;
     titulo: string;
     descricao: string;
+    url_img: string;
   }
 
   export interface FuncaoCursoModel {
@@ -102,6 +103,11 @@ export interface UsuarioModel {
     fk_id_curso: number;
     fk_id_admin: number;
     data_liberacao: string;
+
+    Curso : CursoModel;
+    Admin: UsuarioModel;
+    Funcionario: UsuarioModel;
+
   }
 
   export interface LogModel {

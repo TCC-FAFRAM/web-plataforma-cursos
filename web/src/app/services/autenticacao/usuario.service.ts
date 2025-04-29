@@ -8,7 +8,7 @@ import { BaseService } from '../base.service';
 @Injectable({
   providedIn: 'root',
 })
-export class UsuarioService extends BaseService {
+export class UsuarioAuthService extends BaseService {
   getUsuarioLogado() {
     throw new Error('Method not implemented.');
   }

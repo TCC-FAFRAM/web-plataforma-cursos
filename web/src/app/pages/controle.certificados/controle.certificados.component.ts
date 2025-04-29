@@ -8,8 +8,8 @@ import { TableComponent } from '../../core/ui/components/table/table.component';
 import { CommonModule } from '@angular/common';
 import { DropdownComponent } from '../../core/ui/components/dropdown/dropdown.component';
 import { convertDropdownList, DropdownDTO } from '../../dtos/dropdown/dropdown.dto';
-import { UsuariosService } from '../../services/usuarios/usuario.service';
 import { CursoService } from '../../services/curso/curso.service';
+import { UsuarioService } from '../../services/usuarios/usuario.service';
 
 @Component({
   selector: 'app-controle.certificados',
@@ -19,7 +19,7 @@ import { CursoService } from '../../services/curso/curso.service';
   styleUrl: './controle.certificados.component.css',
 })
 export class ControleCertificadosComponent extends BaseController<CertificadoModel> {
-  serviceUsuario = inject(UsuariosService);
+  serviceUsuario = inject(UsuarioService);
   serviceCurso = inject(CursoService);
   certificado: CertificadoModel | null  = null;
 

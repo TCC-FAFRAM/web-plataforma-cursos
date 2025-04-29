@@ -6,16 +6,18 @@ import { CommonModule } from '@angular/common';
 import { DropdownComponent } from "../../core/ui/components/dropdown/dropdown.component";
 import {  FazendaModel, UsuarioModel } from '../../models/usuario/controle.usuario.model';
 import { BaseController } from '../../services/base.crud.controller';
-import { UsuariosService } from '../../services/usuarios/usuario.service';
+import { UsuarioService } from '../../services/usuarios/usuario.service';
 import { FuncaoService } from '../../services/funcao/funcao.service';
 import { HttpParams } from '@angular/common/http';
 import { convertDropdownList, DropdownDTO } from '../../dtos/dropdown/dropdown.dto';
 import { DistritoService } from '../../services/ditrito/distrito.service';
+import { RouterSubmenu } from '../../dtos/submenu/submenu.dto';
+import { SubmenuComponent } from "../../core/ui/components/submenu/submenu.component";
 
 @Component({
   selector: 'app-controle.usuarios',
   standalone: true,
-  imports: [CommonModule, TableComponent, TableLayoutComponent, ReactiveFormsModule, DropdownComponent],
+  imports: [CommonModule, TableComponent, TableLayoutComponent, ReactiveFormsModule, DropdownComponent, SubmenuComponent],
   templateUrl: './controle.usuarios.component.html',
   styleUrl: './controle.usuarios.component.css'
 })
@@ -24,6 +26,21 @@ serviceFuncao = inject(FuncaoService);
 serviceDistrito = inject(DistritoService);
 activeFormulario = signal(false);
 usuario: UsuarioModel | null = null;
+
+  routerSubmenu: RouterSubmenu[]= [ 
+    {
+      active: true,
+      label: 'Usuarios',
+      router: '/controleusuario'
+    },
+    {
+      active: false,
+      label: 'Liberação Curso',
+      router: '/controleliberacaocurso'
+    },
+
+
+  ];
 
   columns = [
     { field: 'id_usuario', label: 'ID' },
@@ -65,7 +82,7 @@ usuario: UsuarioModel | null = null;
 
   constructor(
     protected override fb: FormBuilder,
-    usuariosService: UsuariosService
+    usuariosService: UsuarioService
   ) {
     super(fb, usuariosService, 'id_usuario');
     this.form = this.buildForm();
