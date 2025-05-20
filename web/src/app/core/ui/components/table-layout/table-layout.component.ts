@@ -20,6 +20,7 @@ export class TableLayoutComponent {
   // Eventos
   @Output() pageChange = new EventEmitter<number>();
   @Output() pageSizeChange = new EventEmitter<number>();
+  @Output() ActiveButtonNovo = new EventEmitter<boolean>(true);
 
   currentPage = 1;
   @Input() activeFormulario = signal(false);
@@ -30,6 +31,10 @@ export class TableLayoutComponent {
 
   setActiveFormulrio(value: boolean) {
     this.activeFormulario.set(value);
+  }
+
+  setNovoButton(){
+    this.ActiveButtonNovo.emit(true);
   }
 
   get pages(): number[] {

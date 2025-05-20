@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { BaseController } from '../../services/base.crud.controller';
 import { CursoService } from '../../services/curso/curso.service';
@@ -38,6 +38,7 @@ export class ControleCursosComponent extends BaseController<CursoModel> {
     }
 
   ];
+  activeFormulario = signal(false);
   constructor(
     protected override fb: FormBuilder,
     cursoService: CursoService
@@ -47,6 +48,14 @@ export class ControleCursosComponent extends BaseController<CursoModel> {
     this.carregar();
     
   }
+
+  onNovo() {
+  this.form.reset();
+  this.activeEdit.set(false);
+  this.activeFormulario.set(true);
+  this.data = null;
+}
+
 
   columns = [
     { field: 'id_curso', label: 'ID' },
@@ -58,7 +67,7 @@ export class ControleCursosComponent extends BaseController<CursoModel> {
     return this.fb.group({
       titulo: ['', Validators.required],
       descricao: ['', Validators.required],
-      url_img: ['', Validators.required],
+      url_img: ['', [Validators.required, Validators.maxLength(150)]]
     });
   }
 
@@ -69,6 +78,7 @@ export class ControleCursosComponent extends BaseController<CursoModel> {
   onEdit(curso: CursoModel) {
     this.form.patchValue(curso);
     this.activeEdit.set(true);
+    this.activeFormulario.set(true);
     this.data = curso;
 
   }

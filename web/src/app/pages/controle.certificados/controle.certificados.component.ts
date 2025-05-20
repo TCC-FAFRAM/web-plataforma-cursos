@@ -19,6 +19,7 @@ import { UsuarioService } from '../../services/usuarios/usuario.service';
   styleUrl: './controle.certificados.component.css',
 })
 export class ControleCertificadosComponent extends BaseController<CertificadoModel> {
+
   serviceUsuario = inject(UsuarioService);
   serviceCurso = inject(CursoService);
   certificado: CertificadoModel | null  = null;
@@ -92,9 +93,15 @@ export class ControleCertificadosComponent extends BaseController<CertificadoMod
     this.carregar();
   }
 
+
+    onNovo() {
+  this.form.reset();
+  this.activeEdit.set(false);
+
+}
   buildForm(): FormGroup {
     return this.fb.group({
-      fk_id_usuario: [null, Validators.required],
+      fk_id_usuario: [null, Validators.required, ],
       fk_id_curso: [null, Validators.required],
       url_certificado: ['', Validators.required],
       status: ['INATIVO', Validators.required],

@@ -1,5 +1,5 @@
 
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { TableLayoutComponent } from "../../../core/ui/components/table-layout/table-layout.component";
 import { TableComponent } from "../../../core/ui/components/table/table.component";
 import { AulaModel } from '../../../models/usuario/controle.usuario.model';
@@ -12,11 +12,12 @@ import { SubmenuComponent } from "../../../core/ui/components/submenu/submenu.co
 import { convertDropdownList, DropdownDTO } from '../../../dtos/dropdown/dropdown.dto';
 import { ModuloService } from '../../../services/curso/modulo.service';
 import { DropdownComponent } from "../../../core/ui/components/dropdown/dropdown.component";
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-controle.aulas',
   standalone: true,
-  imports: [TableLayoutComponent, TableComponent, TableComponent, TableLayoutComponent, ReactiveFormsModule, SubmenuComponent, DropdownComponent],
+  imports: [CommonModule, TableLayoutComponent, TableComponent, TableComponent, TableLayoutComponent, ReactiveFormsModule, SubmenuComponent, DropdownComponent],
   templateUrl: './controle.aulas.component.html',
   styleUrl: './controle.aulas.component.css'
 })
@@ -25,7 +26,7 @@ import { DropdownComponent } from "../../../core/ui/components/dropdown/dropdown
   titleCurse = '';
   idCurso: number = 0;
   serviceModulo = inject(ModuloService);
-
+  activeFormulario = signal(false);
   routerSubmenu: RouterSubmenu[]= [
       {
         active: false,
@@ -54,6 +55,14 @@ import { DropdownComponent } from "../../../core/ui/components/dropdown/dropdown
 
 
   }
+
+ onNovo() {
+  this.form.reset();
+  this.activeEdit.set(false);
+  this.activeFormulario.set(true);
+  this.aula = null;
+}
+
 
 
   ngOnInit(): void {
@@ -101,7 +110,7 @@ import { DropdownComponent } from "../../../core/ui/components/dropdown/dropdown
       url_video: ['', Validators.required],
       duracao: [0, Validators.required],
       descricao: ['', Validators.required],
-      fk_id_modulo:  [0, Validators.required],
+      fk_id_modulo: [null, Validators.required], 
 
     });
   }
@@ -114,7 +123,7 @@ import { DropdownComponent } from "../../../core/ui/components/dropdown/dropdown
     this.form.patchValue(data);
     this.activeEdit.set(true);
     this.aula = data;
-
+    this.activeFormulario.set(true)
     this.form.get('fk_id_modulo')?.setValue(data.Modulo.id_modulo);
     this.selectedModulo = data.Modulo?.id_modulo;
     this.selectedModuloLabel = data.Modulo?.titulo;

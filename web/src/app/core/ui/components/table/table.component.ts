@@ -50,9 +50,12 @@ export class TableComponent {
     return value && typeof value === 'object' && !Array.isArray(value);
   }
 
-  isDate(value: any): boolean {
-    return typeof value === 'string' && !isNaN(Date.parse(value));
-  }
+isDate(value: any): boolean {
+  if (typeof value !== 'string') return false;
+  // Só aceita padrões ISO
+  return /^\d{4}-\d{2}-\d{2}(T\d{2}:\d{2}:\d{2}(\.\d+)?(Z|([+-]\d{2}:\d{2}))?)?$/.test(value);
+}
+
 
   extractDefaultField(obj: any): string {
     if (!obj) return '-';

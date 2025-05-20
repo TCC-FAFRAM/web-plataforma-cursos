@@ -1,5 +1,5 @@
 
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { TableComponent } from "../../../core/ui/components/table/table.component";
 import { TableLayoutComponent } from "../../../core/ui/components/table-layout/table-layout.component";
 import { RouterSubmenu } from '../../../dtos/submenu/submenu.dto';
@@ -11,11 +11,12 @@ import { SubmenuComponent } from "../../../core/ui/components/submenu/submenu.co
 import { CursoService } from '../../../services/curso/curso.service';
 import { convertDropdownList, DropdownDTO } from '../../../dtos/dropdown/dropdown.dto';
 import { DropdownComponent } from "../../../core/ui/components/dropdown/dropdown.component";
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-controle.modulos',
   standalone: true,
-  imports: [TableComponent, TableLayoutComponent, SubmenuComponent, ReactiveFormsModule, DropdownComponent],
+  imports: [CommonModule, TableComponent, TableLayoutComponent, SubmenuComponent, ReactiveFormsModule, DropdownComponent],
   templateUrl: './controle.modulos.component.html',
   styleUrl: './controle.modulos.component.css'
 })
@@ -54,7 +55,7 @@ export class ControleModulosComponent extends BaseController<ModuloModel> {
      dropdownItemsCurso: DropdownDTO[] = []
      selectedCurso = 0;
      selectedCursoLabel = 'Selecione o Curso';
-
+     activeFormulario = signal(false);
 
 
   constructor(
@@ -91,10 +92,18 @@ export class ControleModulosComponent extends BaseController<ModuloModel> {
     return this.fb.group({
       titulo: ['', Validators.required],
       descricao: ['', Validators.required],
-      ordem: [0, Validators.required],
+      ordem: [0, [Validators.required, Validators.min(1)]],
       fk_id_curso: [null, Validators.required],
     });
   }
+
+  onNovo() {
+  this.form.reset();
+  this.activeEdit.set(false);
+  this.activeFormulario.set(true);
+  this.data = null;
+}
+
 
 
   onPageSizeChange(newSize: number): void {
@@ -108,6 +117,8 @@ export class ControleModulosComponent extends BaseController<ModuloModel> {
     this.data = data;
     this.selectedCurso = data.Curso?.id_curso;
     this.selectedCursoLabel = data.Curso?.titulo;
+    this.activeEdit.set(true);
+    this.activeFormulario.set(true);
   }
 
   onDelete(data: ModuloModel) {
