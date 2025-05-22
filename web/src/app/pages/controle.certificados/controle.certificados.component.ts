@@ -103,7 +103,7 @@ export class ControleCertificadosComponent extends BaseController<CertificadoMod
     return this.fb.group({
       fk_id_usuario: [null, Validators.required, ],
       fk_id_curso: [null, Validators.required],
-      url_certificado: ['', Validators.required],
+      url_certificado: ['', Validators.required, Validators.pattern(/^(http|https):\/\/[^ "]+$/)],
       status: ['INATIVO', Validators.required],
     });
   }
