@@ -16,6 +16,11 @@ export class BaseCrudService<T> extends BaseService {
     return this.httpClient.get<PagedResult<T>>(this.endpoint, { params });
   }
 
+  // NOVO MÉTODO: buscar por ID
+  findById(id: number): Observable<T> {
+    return this.httpClient.get<T>(`${this.endpoint}/${id}`);
+  }
+
   create(data: T) {
     return this.httpClient.post<T>(this.endpoint, data);
   }

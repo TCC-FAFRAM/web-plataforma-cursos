@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { BaseController } from '../../services/base.crud.controller';
 import { CursoService } from '../../services/curso/curso.service';
@@ -9,6 +9,8 @@ import { DropdownComponent } from '../../core/ui/components/dropdown/dropdown.co
 import { CommonModule } from '@angular/common';
 import { SubmenuComponent } from "../../core/ui/components/submenu/submenu.component";
 import { RouterSubmenu } from '../../dtos/submenu/submenu.dto';
+import { DropdownDTO } from '../../dtos/dropdown/dropdown.dto';
+import { ModuloService } from '../../services/curso/modulo.service';
 
 
 @Component({
@@ -20,7 +22,8 @@ import { RouterSubmenu } from '../../dtos/submenu/submenu.dto';
 })
 export class ControleCursosComponent extends BaseController<CursoModel> {
   data: CursoModel | null = null;
-  routerSubmenu: RouterSubmenu[]= [ 
+  serviceModulo = inject(ModuloService);
+  routerSubmenu: RouterSubmenu[] = [ 
     {
       active: true,
       label: 'Cursos',
@@ -39,6 +42,8 @@ export class ControleCursosComponent extends BaseController<CursoModel> {
 
   ];
   activeFormulario = signal(false);
+
+
   constructor(
     protected override fb: FormBuilder,
     cursoService: CursoService
@@ -48,6 +53,10 @@ export class ControleCursosComponent extends BaseController<CursoModel> {
     this.carregar();
     
   }
+
+
+ 
+
 
   onNovo() {
   this.form.reset();

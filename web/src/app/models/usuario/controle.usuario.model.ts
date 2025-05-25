@@ -82,11 +82,33 @@ export interface UsuarioModel {
 
   export interface ProvaModel {
     id_prova: number;
-    fk_id_curso: number;
+    fk_id_modulo: number;
     nota_minima: number;
     total_perguntas: number;
-    Curso: CursoModel;
+    Modulo: ModuloModel;
+    Questoes: QuestaoModel[];
   }
+
+export interface QuestaoModel {
+  id_questao: number;
+  pergunta: string;
+  opcoes: string[];        // Array de alternativas
+  resposta_correta: number; // Índice da opção correta
+  peso: number;
+  fk_id_prova: number;
+  Prova?: ProvaModel;       // opcional, se vier expandido
+}
+
+export interface RespostaQuestaoModel {
+  id_resposta: number;
+  fk_id_questao: number;
+  fk_id_tentativa: number;
+  resposta_aluno: number; // Índice ou valor da resposta do aluno
+
+  Questao?: QuestaoModel;                // Relação opcional expandida
+  TentativaProva?: TentativasProvaModel; // Relação opcional expandida
+}
+
 
   export interface TentativasProvaModel {
     id_tentativa_prova: number;
