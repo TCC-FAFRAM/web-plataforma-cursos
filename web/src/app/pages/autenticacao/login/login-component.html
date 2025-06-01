@@ -1,9 +1,24 @@
 <div class="flex min-h-screen">
   <!-- Left - Login -->
   <div class="w-full md:w-1/2 flex flex-col justify-center px-8 bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100">
-    <div class="max-w-md w-full mx-auto">
+     <div class="max-w-md w-full mx-auto">
+      @if(active){
       <h2 class="text-3xl font-bold mb-2 text-primary">Entrar</h2>
       <p class="text-sm text-gray-500 dark:text-gray-400 mb-6">Entre com sua conta.</p>
+      } @else {
+      <h2 class="text-3xl font-bold mb-2 text-primary">Cadastrar</h2>
+      <p class="text-sm text-gray-500 dark:text-gray-400 mb-6">Preencher todos campos</p>
+      }
+      
+    @if(active){
+      <app-cadastro-usuario />
+       <p class="text-sm text-center text-gray-500 dark:text-gray-400 mt-6">
+        Já possui uma conta ?
+        <a (click)="active = false" class="text-indigo-600 font-semibold hover:underline">
+          Entrar</a>
+      </p>
+    } @else {
+
 
       <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
         <div class="mb-4">
@@ -54,12 +69,13 @@
 
       <p class="text-sm text-center text-gray-500 dark:text-gray-400 mt-6">
         Ainda não está registrado?
-        <a href="#" class="text-indigo-600 font-semibold hover:underline">
+        <a (click)="active = true" class="text-indigo-600 font-semibold hover:underline">
           Criar uma conta</a>
       </p>
-    </div>
+    
+    }
+   </div>
   </div>
-
   <!-- Right - Banner -->
   <div class="hidden md:flex w-1/2 bg-gradient-to-br from-primary to-primary text-white items-center justify-center relative">
     <div class="p-10 max-w-lg">
@@ -72,3 +88,12 @@
     </div>
   </div>
 </div>
+
+
+  <app-modal-feedback
+  *ngIf="showModal"
+  [type]="modalType"
+  [title]="modalTitle"
+  [message]="modalMsg"
+  (close)="onCloseModal()">
+</app-modal-feedback>

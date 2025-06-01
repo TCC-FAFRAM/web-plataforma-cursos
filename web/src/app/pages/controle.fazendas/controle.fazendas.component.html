@@ -46,23 +46,37 @@
         ></textarea>
       </label>
 
-      <label class="text-sm text-gray-600">
-        Distrito ID:
-        <input
-          formControlName="distrito_id"
-          type="number"
-          class="w-full border px-2 py-1 rounded mt-1"
-        />
-      </label>
 
-      <label class="text-sm text-gray-600">
-        Município ID:
-        <input
-          formControlName="municipio_id"
-          type="number"
-          class="w-full border px-2 py-1 rounded mt-1"
-        />
-      </label>
+  <label class="text-sm font-medium">Estado*
+  <app-dropdown
+    [items]="estados"
+    labelKey="nome"
+    valueKey="id_estado"
+    placeholder="Selecione o estado"
+    [selectedValue]="form.get('estado')?.value"
+    (selected)="onEstadoSelected($event)"
+  ></app-dropdown></label>
+
+      <label class="text-sm font-medium">Município*
+<app-dropdown
+  [items]="municipios"
+  labelKey="nome"
+  valueKey="id_municipio"  
+  placeholder="Selecione o município"
+  [selectedValue]="form.get('municipio_id')?.value"
+  (selected)="onMunicipioSelected($event)"
+></app-dropdown></label>
+
+
+  <label class="text-sm font-medium">Distrito
+ <app-dropdown
+  [items]="distritos"
+  labelKey="nome"
+  valueKey="id_distrito"  
+  placeholder="Selecione o distrito"
+  [selectedValue]="form.get('distrito_id')?.value"
+  (selected)="onDistritoSelected($event)"
+></app-dropdown></label>
 
       <label class="text-sm text-gray-600">
         Complemento:

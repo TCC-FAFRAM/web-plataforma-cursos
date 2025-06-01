@@ -1,0 +1,96 @@
+
+  
+  <form [formGroup]="form" (ngSubmit)="submit()" autocomplete="off" class="space-y-4">
+    <div class="grid grid-cols-2 gap-2">
+      <div>
+        <label class="text-sm font-medium">Nome*</label>
+        <input formControlName="nome" class="w-full px-3 py-2 border rounded" />
+      </div>
+      <div>
+        <label class="text-sm font-medium">Sobrenome*</label>
+        <input formControlName="sobre_nome" class="w-full px-3 py-2 border rounded" />
+      </div>
+    </div>
+    <div>
+      <label class="text-sm font-medium">Email*</label>
+      <input formControlName="email" type="email" class="w-full px-3 py-2 border rounded" />
+    </div>
+    <div>
+      <label class="text-sm font-medium">Senha*</label>
+      <input formControlName="senha" type="password" class="w-full px-3 py-2 border rounded" />
+    </div>
+    <div>
+      <label class="text-sm font-medium">CPF*</label>
+      <input formControlName="cpf" class="w-full px-3 py-2 border rounded" />
+    </div>
+    <div>
+      
+  <label class="text-sm font-medium">Fazenda*</label>
+  <app-dropdown
+    [items]="fazendas"
+    labelKey="nome"
+    valueKey="id_fazenda"
+    placeholder="Selecione a Fazenda"
+    [selectedValue]="form.get('fk_id_fazenda')?.value"
+    (selected)="onFazendaSelected($event)"
+  ></app-dropdown>
+   
+    </div>
+    <div class="grid grid-cols-2 gap-2">
+   
+   <div>
+  <label class="text-sm font-medium">Estado*</label>
+  <app-dropdown
+    [items]="estados"
+    labelKey="nome"
+    valueKey="id_estado"
+    placeholder="Selecione o estado"
+    [selectedValue]="form.get('estado')?.value"
+    (selected)="onEstadoSelected($event)"
+  ></app-dropdown>
+</div>
+
+<div>
+  <label class="text-sm font-medium">Município*</label>
+<app-dropdown
+  [items]="municipios"
+  labelKey="nome"
+  valueKey="id_municipio"  
+  placeholder="Selecione o município"
+  [selectedValue]="form.get('municipio_id')?.value"
+  (selected)="onMunicipioSelected($event)"
+></app-dropdown>
+</div>
+    </div>
+  <div>
+  <label class="text-sm font-medium">Distrito</label>
+ <app-dropdown
+  [items]="distritos"
+  labelKey="nome"
+  valueKey="id_distrito"  
+  placeholder="Selecione o distrito"
+  [selectedValue]="form.get('distrito_id')?.value"
+  (selected)="onDistritoSelected($event)"
+></app-dropdown>
+</div>
+    <div>
+      <label class="text-sm font-medium">Complemento</label>
+      <input formControlName="complemento" class="w-full px-3 py-2 border rounded" />
+    </div>
+    <button
+      type="submit"
+      class="w-full bg-primary text-white py-2 rounded-lg hover:opacity-85 cursor-pointer transition"
+      [disabled]="form.invalid || loading()">
+      {{ loading() ? 'Salvando...' : 'Cadastrar' }}
+    </button>
+  </form>
+
+  
+
+  <app-modal-feedback
+  *ngIf="showModal"
+  [type]="modalType"
+  [title]="modalTitle"
+  [message]="modalMsg"
+  (close)="onCloseModal()">
+</app-modal-feedback>
