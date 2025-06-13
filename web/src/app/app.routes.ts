@@ -12,7 +12,13 @@ export const routes: Routes = [
       ),
     canActivate: [loginGuard],
   },
-
+  {
+        path: 'certificado',
+        loadChildren: () =>
+          import(
+            './pages/certificado-validacao/certificado-validacao.routes'
+          ).then(m => m.certificadoRouter),
+      },
   {
     path: '',
     component: LayoutComponent,
