@@ -2,38 +2,41 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- VIEWPORT que permite zoom-out para o certificado caber inteiro em telas pequenas -->
+    <meta name="viewport" content="width=1123, user-scalable=yes, initial-scale=0.3, minimum-scale=0.1">
     <title>Certificado Dinâmico</title>
     <style>
-        /* Importa fontes para um visual mais elegante */
         @import url('https://fonts.googleapis.com/css2?family=Georgia&family=Roboto:wght@400;700&display=swap');
 
+        html, body {
+            height: 100%;
+        }
         body {
             font-family: 'Roboto', sans-serif;
             background-color: #f0f0f0;
             display: flex;
             justify-content: center;
             align-items: center;
+            min-height: 100vh;
             padding: 20px;
             margin: 0;
             box-sizing: border-box;
-            -webkit-print-color-adjust: exact; /* Garante que as cores de fundo sejam impressas */
+            overflow: auto;
+            -webkit-print-color-adjust: exact;
         }
 
         .certificate-container {
-            width: 1123px; /* Proporção de A4 paisagem (29.7cm a 96dpi) */
-            height: 794px; /* Proporção de A4 paisagem (21cm a 96dpi) */
+            width: 1123px;
+            height: 794px;
             background-color: #ffffff;
-            border: 2px solid #0d47a1; /* Cor azul escura da logo */
+            border: 2px solid #0d47a1;
             padding: 25px;
             box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
-            position: relative; /* Essencial para o posicionamento absoluto do QR Code */
+            position: relative;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
         }
-        
-        /* Borda interna decorativa */
         .certificate-container::before {
             content: '';
             position: absolute;
@@ -41,23 +44,20 @@
             left: 10px;
             right: 10px;
             bottom: 10px;
-            border: 5px solid #008000; /* Cor verde da logo */
-            pointer-events: none; /* Garante que a borda não interfira com o conteúdo */
+            border: 5px solid #008000;
+            pointer-events: none;
         }
-
         .certificate-header {
-            display: flex; /* Usa Flexbox para alinhar itens na horizontal */
-            align-items: center; /* Alinha a logo e o título verticalmente */
-            justify-content: center; /* Centraliza o conjunto no cabeçalho */
-            gap: 25px; /* Adiciona um espaço entre a logo e o título */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 25px;
             margin-bottom: 20px;
         }
-
         .logo {
             max-width: 100px;
             margin-bottom: 0;
         }
-
         .certificate-title {
             font-family: 'Georgia', serif;
             font-size: 48px;
@@ -65,29 +65,24 @@
             margin: 10px 0;
             font-weight: bold;
         }
-
         .certificate-body {
             text-align: center;
             padding: 0 50px;
-            flex-grow: 1; /* Faz o corpo ocupar o espaço disponível */
+            flex-grow: 1;
             display: flex;
             flex-direction: column;
             justify-content: center;
         }
-
         .main-text {
             font-size: 20px;
             line-height: 1.6;
             color: #333;
         }
-
-        /* Estilo para os campos dinâmicos para destaque */
         .dynamic-value {
             font-family: 'Georgia', serif;
             font-weight: bold;
             color: #000000;
         }
-
         .participant-name {
             font-size: 36px;
             font-family: 'Georgia', serif;
@@ -97,23 +92,20 @@
             border-bottom: 2px solid #0d47a1;
             padding-bottom: 10px;
         }
-
         .certificate-footer {
             margin-top: 40px;
             padding: 0 50px;
-            display: flex; /* Para empilhar a data e as assinaturas */
-            flex-direction: column; /* Para empilhar a data e as assinaturas */
-            align-items: flex-end; /* Alinha a data à direita e as assinaturas ao final */
-            position: relative; /* Garante que o date-field e signatures fiquem contidos */
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            position: relative;
         }
-
         .date-field {
             text-align: right;
             font-size: 16px;
             color: #333;
-            margin-bottom: 30px; /* Espaço entre a data e as assinaturas */
+            margin-bottom: 30px;
         }
-        
         .signatures {
             display: flex;
             justify-content: space-between;
@@ -121,35 +113,29 @@
             text-align: center;
             width: 100%;
         }
-
         .signature-block {
             width: 250px;
         }
-
         .signature-line {
             border-bottom: 1px solid #333;
             margin-bottom: 8px;
-            height: 40px; /* Espaço para a assinatura manual */
+            height: 40px;
         }
-
         .signature-title {
             font-size: 14px;
             color: #555;
             font-weight: bold;
         }
-
         .qr-code-container {
-            position: absolute; /* Posicionamento absoluto fora do fluxo */
-            left: 50px; /* Alinha à esquerda, considerando o padding do footer */
-            bottom: 150px; /* Ajuste para alinhar com a data ou conforme desejar */
-            z-index: 10; /* Garante que fique por cima de outros elementos se houver sobreposição */
+            position: absolute;
+            left: 50px;
+            bottom: 150px;
+            z-index: 10;
         }
-
         .qr-code {
-            max-width: 100px; /* Ajuste o tamanho conforme necessário */
+            max-width: 100px;
             height: auto;
         }
-
     </style>
 </head>
 <body>
@@ -163,12 +149,9 @@
             <p class="main-text">
                 Certificamos, para os devidos fins, que o(a) colaborador(a)
             </p>
-
             <h2 class="participant-name">
-                <!-- NOME DINÂMICO AQUI: Substituir {{nome}} pelo dado real -->
                 <span class="dynamic-value">Thiago Monteiro Marcolino</span>
             </h2>
-
             <p class="main-text">
                 portador(a) do CPF nº <span class="dynamic-value">xxx.xxx.xxx-xx</span>,
                 concluiu com aproveitamento o(s) seguinte(s) treinamento(s):<br>
@@ -182,9 +165,7 @@
         </section>
 
         <footer class="certificate-footer">
-            <!-- A data e as assinaturas permanecem no fluxo normal do footer -->
             <div class="date-field">
-                <!-- DATA DINÂMICA AQUI: Substituir {{data_atual}} pela data de emissão -->
                 Emitido em: <span class="dynamic-value">10/06/2025</span>
             </div>
             <div class="signatures">
@@ -202,7 +183,6 @@
                 </div>
             </div>
         </footer>
-        <!-- O QR Code é posicionado de forma absoluta dentro do container principal -->
         <div class="qr-code-container">
             <img src="../../../assets/images/QRCode_Fácil.svg" alt="QR Code de Validação" class="qr-code">
         </div>
