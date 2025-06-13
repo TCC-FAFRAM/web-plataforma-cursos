@@ -4,7 +4,7 @@ import { CerticadoNaoEncontradoComponent } from './certicado-nao-encontrado/cert
 
 export const certificadoRouter: Routes = [
   {
-    path: 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855v',
+    path: 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855',
     loadComponent: () => CertificadoValidacaoComponent,
   },
    {
